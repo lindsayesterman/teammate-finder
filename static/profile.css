@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color:whitesmoke;
+    display:block;
+    margin: 0 auto;
+    width:90%;
+}
+
+html{
+    font-family: 'Roboto', sans-serif;
+}
+
+.nav-bar{
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+    padding: 20px;
+    background-color:white;
+}
+
+ul li a{
+    font-size:15px;
+    color: black;
+    background-color:white;
+    text-decoration: none;
+    border: 1px solid white;
+
+}
+
+.teamnup{
+    font-size:15px;
+}
+
+button{
+    display:block;
+    margin:0 auto;
+    border-radius:30px;
+    width:100px;
+    height:30px;
+    margin-bottom:30px;
+}
+
+.checkboxes{
+    width:10%;
+    height: 0%;
+    margin: 5px auto;
+    text-align: center;
+}
+
+h1, h3{
+    text-align: center;
+    margin:50px;
+}
+
+form{
+    padding:16px;
+}
+
+input[type=text], input[type=name], textarea{
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background:white;
+    margin:20px;
+    border-radius:4px;
+}
+
+textarea{
+    width:65%;
+    height:180px;
+    padding: 12px 20px;
+}

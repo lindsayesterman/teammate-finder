@@ -1,0 +1,168 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Profile
+{% endblock %}
+
+{% block style %}
+    <style>
+        td {
+            padding: 20px;
+        }
+    
+        h4 {
+            text-align: left;
+            color: white;
+        }
+    
+        form {
+            margin-left: 200px;
+            margin-right: 200px;
+        }
+    
+        table {
+            background-color: lightgrey;
+            text-align: left;
+            margin-left: 300px;
+            border-radius: 25px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Find your perfect hackathon teammate today</h1>
+    <h3>Enter some profile info so we can get you matched!</h3>
+    
+    </form>
+        <div>
+            <h4>Your Name:</h4>
+            <input name="name" placeholder="John Doe" type="text">
+        </div>
+        <br>
+        <div>
+            <h4>Summary/bio:</h4>
+            <textarea rows="5" cols="60" name="bio" placeholder="I am a high school senior interested in web applications.
+            I love to play sports, specifically football, and also love to travel! I often do small coding projects to expand my knowledge." type="text"></textarea>
+        </div>
+        <br>
+        <div>
+            <h4>What are your interests?</h4>
+            <input name="interests1" placeholder="Football" type="text">
+            <input name="interest2" placeholder="Travel" type="text">
+            <input name="interests3" placeholder="Web apps" type="text">
+            <input name="interests4" placeholder="Community Service" type="text">
+        </div>
+        <br>
+        <div>
+            <h4>What are your CS skills?</h4>
+            <br>
+            <table>
+                <tr>
+                    <td>
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="Engineering" name="Engineering" value="Engineering">
+                            <label for="Engineering"> Design</label>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="Buisness" name="Buisness" value="Buisness">
+                            <label for="Buisness"> HTML/CSS</label>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="Computer Science" name="Computer Science" value="Computer Science">
+                            <label for="Computer Science"> C</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="Law" name="Law" value="Law">
+                            <label for="Law"> React</label>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="Environmental" name="Environmental" value="Environmental">
+                            <label for="Environmental"> Java</label>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="Health" name="Health" value="Health">
+                            <label for="Health"> Node</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="Education" name="Education" value="Education">
+                            <label for="Education"> Linux</label>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="Science" name="Science" value="Science">
+                            <label for="Science"> SQL</label>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="Government" name="Government" value="Government">
+                            <label for="Government"> MongoDB</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="Jouranlism" name="Jouranlism" value="Jouranlism">
+                            <label for="Jouranlism"> Javascript</label>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="Historical" name="Historical" value="Historical">
+                            <label for="Historical"> JQuery</label>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="Other" name="Other" value="Other">
+                            <label for="Other"> C++</label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div>
+            <h4>Where do you live?</h4>
+            <input name="location" placeholder="San Fransico, CA" type="text" maxlength="50">
+        </div>
+        <br>
+        <div>
+            <h4>Phone number:</h4>
+            <input name="phone" placeholder="415-888-9574" type="text">
+        </div>
+        <br>
+        <div>
+            <h4>Email:</h4>
+            <input name="email" placeholder="johndoe@gmail.com" type="text">
+        </div>
+        <br>
+        <div>
+            <h4>Additional contact info:</h4>
+            <textarea rows="5" cols="60" name="info" placeholder="Github: johndoe
+other contact: to come" type="text"></textarea>
+        </div>
+        <br>
+        <button class="subButton" type="submit">Finish Profile</button>
+        <br>
+        <br>
+    </form>
+{% endblock %}

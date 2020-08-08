@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color:whitesmoke;
+}
+
+html{
+    font-family: 'Roboto', sans-serif;
+}
+
+
+h1, h3{
+    text-align: center;
+    margin:50px;
+}
+
+button{
+    display:block;
+    margin: 0 auto;
+    width:120px;
+    height:40px;
+    border: 2px solid black;
+    color:black;
+    cursor: pointer;
+}
+

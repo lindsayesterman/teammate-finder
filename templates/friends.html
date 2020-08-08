@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Friends
+{% endblock %}
+
+{% block style %}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {% for row in rows %}
+        <div class="col-sm-6" style="max-width:550px;">
+            <div class="card mb-4 back" style="height:275px;">
+                <div class="card-body" style="max-height:275px;">
+                    <h5 class="card-title">{{ row["username"] }}</h5>
+                    <p class="card-text des">{{ row["skills"] }}</p>
+                    <p class="card-text des">{{ row["bio"] }}</p>
+                    <form action="/profile" method="post">
+                        <input type="hidden" name="row" value="{{row}}">
+                        <input class="btn btn-primary" type="submit" name="button" value="Visit Profile">
+                    </form>
+                    <form action="/friendSomeone" method="post">
+                        <input type="hidden" name="person_id" value="{{row['id']}}">
+                        <input class="btn btn-primary" type="submit" name="button" value="Friend">
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
