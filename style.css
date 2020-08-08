@@ -1,0 +1,59 @@
+html{
+    font-family: 'Roboto', sans-serif;
+}
+.nav-bar{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    justify-content: space-around;
+    background-color:white;
+}
+
+ul a li{
+    margin:3%;
+    font-size:15px;
+    margin-top:25px;
+}
+
+h1, h3 {
+    text-align:center;
+    margin:40px;
+}
+
+.name, .summary, .skills, .teammate{
+    margin:30px;
+}
+
+.teamnup{
+    font-size:15px;
+}
+
+input, label{
+    margin:5px;
+}
+
+input, textarea{
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+}
+
+textarea{
+    width:65%;
+    height:180px;
+    margin:20px;
+    padding: 12px 20px;
+}
+
+button{
+    display:block;
+    margin:0 auto;
+    border-radius:30px;
+    width:100px;
+    height:30px;
+    margin-bottom:30px;
+}
+
+.hidden{
+    display:none
+}
