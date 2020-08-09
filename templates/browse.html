@@ -15,12 +15,11 @@ Browse
     .browse-profiles{
         display: block;
         margin: 0 auto;
-        width: 70%;
-        height:300px;
+        width: 60%;
+        height:340px;
         margin-bottom:65px;
         border: 1px solid white;
         cursor: pointer;
-        background-color: #edf3ff;
         color:black;
         position:relative;
         -webkit-box-shadow: 0px 0px 5px 0px rgba(160,160,160,1);
@@ -41,12 +40,13 @@ Browse
         position:absolute;
         top:97%;
         transform: translate(-50px, -50px);
-        background-color:#64ca86;
-        color:white;
+        background-color: white;
+        border: 1px solid gray;
+        color:black;
     }
     
     input.btn:hover{
-        background-color:#003b72;
+        background-color:blue;
         opacity:.9;
     }
     
@@ -72,7 +72,6 @@ Browse
     font-size: 17px;
     border: 1px solid grey;
     float: left;
-    width: 80%;
     background: #f1f1f1;
     display: block;
     }
@@ -98,6 +97,7 @@ Browse
     clear: both;
     display: table;
     }
+
     input[type=text], input[type=password],textarea, select {
     width: 100%;
     padding: 12px 20px;
@@ -106,6 +106,15 @@ Browse
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    }
+    h6{
+        display: inline;
+        float:left;
+        margin:5px;
+        line-height: .9;
+    }
+    p{
+        font-weight:300;
     }
     
 </style>
@@ -158,10 +167,9 @@ Browse
         <div class=" mb-4 back">
             <div class="card-body">
                 <h5 class="card-title">{{ row["name"] }}</h5>
-                <p class="card-text des">Bio: {{ row["bio"] }}</p>
-                <p class="card-text des">Interests: {{ row["interest"] }}</p>
-                    <p class="card-text des">Skills: {{ row["skills"] }}
-                    </p>
+                <h6 class="card-text des pink">Bio:</h6><p> {{ row["bio"] }}</p>
+                <h6 class="card-text des green">Interests:</h6><p> {{ row["interests"] }}</p>
+                    <h6 class="card-text des blue">Skills:</h6><p> {{ row["skills"] }}</p>
                     <form action="/profile" method="post">
                         <input type="hidden" name="person_id" value="{{row['id']}}">
                         <input class="first btn btn-primary" type="submit" name="button" value="Visit Profile">

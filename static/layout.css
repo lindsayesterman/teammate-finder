@@ -117,3 +117,35 @@ h3.open{
     border-radius: 4px;
     color: red;
 }
+
+
+.red{
+    color: rgb(214, 54, 43);
+    background-color: rgb(254, 226, 219)
+}
+.purple{
+    color: rgb(102, 51, 204);
+    background-color: rgb(236, 228, 252);
+}
+
+.pink{
+    color: rgb(204, 20, 123);
+    background-color: rgb(255, 226, 242);
+}
+.green{
+    color: rgb(0, 138, 45);
+    background-color: rgb(219, 242, 226);
+}
+.yellow{
+    color: rgb(255,255,0);
+    background-color: rgb(255,255,224);
+}
+
+.orange{
+    color: rgb(255, 166, 0);
+    background-color: rgb(255, 236, 202);
+}
+.blue{
+    color: rgb(0, 106, 212);
+    background-color: rgb(219, 238, 255);
+}

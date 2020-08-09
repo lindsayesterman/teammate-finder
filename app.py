@@ -163,26 +163,34 @@ def partners():
         friendsName = []
         #check if your username is in the user1 slot
         friend_name = db.execute("SELECT username1 FROM friends WHERE username2 = :user", user=session["user_id"])
+        #if not nothing
         if len(friend_name) != 0:
-            friend_name=friend_name[0]
-            for friend in friend_name["username1"]:
-                friendsName.append(friend)
+            #loop through ever dict pair
+            for friend in friend_name:
+                #append the value of the dict
+                friendsName.append(friend["username1"])
         #check if your username is in the user2 slot
         friend_name2 = db.execute("SELECT username2 FROM friends WHERE username1 = :user", user=session["user_id"])
+        #if not nothing
         if len(friend_name2) != 0:
-            friend_name2=friend_name2[0]
-            for friend in friend_name2["username2"]:
-                friendsName.append(friend)
+            #loop through every dict pair
+            for friend in friend_name2:
+                #append val of dict
+                friendsName.append(friend["username2"])
+        #create array for profiles of partners
         friends=[]
+        #if not nothing
         if friendsName != 0:
+            #loop through every id of friends
             for friend in friendsName:
+                #append their matching profile row
                 row = db.execute("SELECT * FROM profile WHERE id=:person_id",person_id=friend)
                 friends.append(row)
-            friends=friends[0]
+        #display the partners by inputting the list of friend's profiles
         return render_template("partners.html", friends=friends)
 
 @app.route("/remove", methods=["POST","GET"])
-def partners():
+def remove():
     """Show friends"""
     if request.method == "POST":
         person_id = request.form.get("person_id_remove")
@@ -215,13 +223,13 @@ def browse():
             #if the category bar is unchanged
             if category == "all":
                 #get all from internship database
-                rows = db.execute("SELECT * FROM profile WHERE id IS NOT :user",user=session["user_id"])
+                rows = db.execute("SELECT * FROM profile WHERE NOT id=:user",user=session["user_id"])
                 return render_template("browse.html", rows=rows)
             #if a category has been selected
             else:
                 #get only rows with category from internship database
                 rows = db.execute(
-                    "SELECT * FROM profile WHERE skills LIKE ('%' || :category || '%') AND id IS NOT :user", category=category,user=session["user_id"])
+                    "SELECT * FROM profile WHERE skills LIKE ('%' || :category || '%') AND NOT id=:user", category=category,user=session["user_id"])
                 print(rows)
                 return render_template("browse.html", rows=rows)
         #if there are items in the search bar
@@ -242,7 +250,7 @@ def browse():
                 for val in searchArr:
                     rows = []
                     rowsTemp = db.execute(
-                    "SELECT * FROM profile WHERE username LIKE ('%' || :search || '%') OR bio LIKE ('%' || :search || '%') OR skills LIKE ('%' || :search || '%') OR interestes LIKE ('%' || :search || '%') OR location LIKE ('%' || :search || '%') AND id IS NOT :user", search=val,user=session["user_id"])
+                    "SELECT * FROM profile WHERE username LIKE ('%' || :search || '%') OR bio LIKE ('%' || :search || '%') OR skills LIKE ('%' || :search || '%') OR interests LIKE ('%' || :search || '%') OR location LIKE ('%' || :search || '%') AND NOT id=:user", search=val,user=session["user_id"])
                     for row in rowsTemp:
                         if row not in rows:
                             rows.append(row)
@@ -253,7 +261,7 @@ def browse():
                 for val in searchArr:
                     rows=[]
                     rowsTemp = db.execute(
-                    "SELECT * FROM profile WHERE username LIKE ('%' || :search || '%') OR bio LIKE ('%' || :search || '%') OR skills LIKE ('%' || :search || '%') OR interestes LIKE ('%' || :search || '%') OR location LIKE ('%' || :search || '%') AND id IS NOT :user", search=val,user=session["user_id"])
+                    "SELECT * FROM profile WHERE username LIKE ('%' || :search || '%') OR bio LIKE ('%' || :search || '%') OR skills LIKE ('%' || :search || '%') OR interests LIKE ('%' || :search || '%') OR location LIKE ('%' || :search || '%') AND NOT id=:user", search=val,user=session["user_id"])
                     for row in rowsTemp:
                         if row not in rows and category in row["skills"]:
                             rows.append(row)

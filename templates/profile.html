@@ -83,6 +83,7 @@
             margin-bottom:15px;
         }
 
+
     </style>
 {% endblock %}
 
@@ -105,59 +106,52 @@
                 <input id="editProfile" type="submit" value="Edit Profile"/>
             </form>
             <form action="#">
-                <input id="logOut" type="submit" value="Log Out"/>
+                <input id="logOut" type="submit" value="Log Out" href="/logout"/>
             </form>
         </div>
         <div id="about">
             <div>
                 
                 <div class="section">
-                <h4 class="sub" style="color: rgb(102, 51, 204);
-                background-color: rgb(236, 228, 252);">Bio:</h4>
+                <h4 class="sub purple" >Bio:</h4>
                 <p class="ans">{{row["bio"]}}</p>
                 <br>  
             </div>
 
                 <div class="section">
-                <h4 class="sub" style="color: rgb(214, 54, 43);
-                background-color: rgb(254, 226, 219)">Interests:</h4>
+                <h4 class="sub red">Interests:</h4>
                 <p class="ans" >{{row["interests"]}}</p>
                 <br></div>
 
                 <div class="section">
 
-                <h4 class="sub" style="color: rgb(204, 20, 123);
-                background-color: rgb(255, 226, 242);">Skills:</h4>
+                <h4 class="sub pink" >Skills:</h4>
                 <p class="ans" >{{row["skills"]}}</p>
                 <br>
                 </div>
                 <div class="section">
 
-                <h4 class="sub"  style="color: rgb(0, 138, 45);
-                background-color: rgb(219, 242, 226);">Location:</h4>
+                <h4 class="sub green">Location:</h4>
                 <p class="ans"> {{row["location"]}}</p>
                 <br>                    </div>
 
 
                 <div class="section">
-                <h4 class="sub"   style="color: rgb(0, 106, 212);
-                background: rgb(219, 238, 255);">Phone #:</h4>
+                <h4 class="sub blue">Phone #:</h4>
                 <p class="ans">{{row["phone"]}}</p>
                 <br>
             </div>
 
                 <div class="section">
 
-                <h4 class="sub" style="color: rgb(255,255,0);
-                background-color: rgb(255,255,224);">Email:</h4>
+                <h4 class="sub yellow">Email:</h4>
                 <p class="ans">{{ row["email"] }}</p> 
             {% if row["info"] != None %}<br>
         </div>
 
             <div class="section">
 
-                    <h4 class="sub" style="color: rgb(255, 166, 0);
-                    background-color: rgb(255, 236, 202);">Other Contacts:</h4>
+                    <h4 class="sub orange">Other Contacts:</h4>
                     <p class="ans">{{row["info"]}}</p>
                     </div>
             {% endif %}
