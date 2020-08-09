@@ -109,15 +109,15 @@
                     <input type="hidden" name="row" value="{{row}}">
                     <input class="second btn btn-primary" id="partnerUp" type="submit" name="button" value="Edit Profile">
                 </form>
+                <form action="/deleteAcc">
+                    <input id="logOut" type="submit" value="Delete Account">
+                </form>
             {% else %}
                 <form action="/partners" method="post">
                     <input type="hidden" name="person_id" value="{{row['id']}}">
                     <input class="second btn btn-primary" id="partnerUp" type="submit" name="button" value="Partner Up">
                 </form>
             {% endif %}
-            <form action="#">
-                <input id="logOut" type="submit" value="Log Out" href="/logout"/>
-            </form>
         </div>
         <div id="about">
             <div>

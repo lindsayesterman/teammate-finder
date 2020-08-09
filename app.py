@@ -66,7 +66,7 @@ def login():
 
 @app.route("/register", methods=["GET","POST"])
 def register():
-    """Register"""
+    """Register and create profile in one"""
     if request.method == "POST":
         #get info from form
         username = request.form.get("username")
@@ -82,7 +82,7 @@ def register():
             return error("Passwords Do Not Match", "/register")
         for x in users:
             for y in x.values():
-                if username in y:
+                if username == y:
                     return error("username already exists", "/register")
         #insert new user into table and store hashed password 
         db.execute("INSERT INTO user (username, password) VALUES (:username, :password)", username=username, password=generate_password_hash(password))
@@ -131,19 +131,14 @@ def logout():
 
 @app.route("/")
 def index():
-    """index"""
+    """home page if not logged in"""
     return render_template("index.html")
 
 @app.route("/index")
 @login_required
 def index2():
-    """index"""
+    """home page once logged in"""
     return render_template("index2.html")
-
-@app.route("/about")
-def about():
-    """index"""
-    return render_template("about.html")
 
 @app.route("/profile", methods=["GET","POST"])
 def profile():
@@ -161,7 +156,7 @@ def profile():
 
 @app.route("/updateProf", methods=["GET","POST"])
 def updateProf():
-    """Register"""
+    """actually update the profile"""
     if request.method == "POST":
         #CREATE profile stuff
         name = request.form.get("name")
@@ -195,7 +190,7 @@ def updateProf():
 
 @app.route("/updateProf2", methods=["GET","POST"])
 def updateProf2():
-    """Register"""
+    """upodate your profile link"""
     if request.method == "POST":
         row = request.form.get("row")
         #unwraps the dict form the string
@@ -254,7 +249,7 @@ def partners():
 
 @app.route("/remove", methods=["POST","GET"])
 def remove():
-    """Show friends"""
+    """remove friends"""
     if request.method == "POST":
         person_id = request.form.get("person_id_remove")
         #delete partner
@@ -337,7 +332,7 @@ def browse():
 
 @app.route("/view", methods=["POST","GET"])
 def view():
-    """Browse other people"""
+    """Browse projects"""
     if request.method == "POST":
         #means something was searched
         searchVal = request.form.get("search2")
@@ -387,7 +382,7 @@ def view():
 
 @app.route("/project", methods=["GET", "POST"])
 def project():
-    """Show portfolio of stocks"""
+    """Create Project"""
     if request.method == "POST":
         #get all values
         title = request.form.get("title")
@@ -405,10 +400,22 @@ def project():
 
 @app.route("/removeProj", methods=["POST","GET"])
 def removeProj():
-    """Show friends"""
+    """Remove a project"""
     if request.method == "POST":
         #return url
         url = request.form.get("url")
         #delete project with same url
         db.execute("DELETE FROM projects WHERE url=:url", url=url)
         return redirect("/view")
+
+@app.route("/deleteAcc")
+def deleteAcc():
+    """Delete Account"""
+    #delete profile, user, and friends
+    #profile
+    db.execute("DELETE FROM profile WHERE id=:user_id", user_id=session["user_id"])
+    #users
+    db.execute("DELETE FROM user WHERE id=:user_id", user_id=session["user_id"])
+    #friends
+    db.execute("DELETE FROM friends WHERE username1=:user_id OR username2=:user_id", user_id=session["user_id"])
+    return redirect("/logout")
