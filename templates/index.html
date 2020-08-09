@@ -9,13 +9,12 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Find a Coding Partner. With Just One Click.</h1>
-    <h3>Start browsing for teammates by skills, interests, or 
-        experience. Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-        Illum tempore ducimus deserunt facere ex fugit, nisi obcaecati! Aliquid 
-        omnis molestias amet distinctio nulla illo, corporis excepturi 
-        ipsa dolores temporibus delectus!</h3>
-
-    <button id="getStarted" href = "/templates/login.html">Get Started</button>
+    <h1 class="open">Find a Coding Partner. With Just One Click.</h1>
+    <h3 class="open">Start browsing for teammates by skills, interests, or 
+        experience. If you have a hackathon coming up and you want to win - pick your ideal teammate here. Our founders always had trouble finding good teamates for their hackathons and we want to solve this problem for you in advance. Get someone who complements your abilities. Find your perfect teammate today.</h3>
+    
+    <form action="/login">
+        <button id="getStarted">Get Started</button>
+    </form>
     <img class="openimg" src="https://insights.dice.com/wp-content/uploads/2018/02/Hackathon-Dice.jpg">
 {% endblock %}

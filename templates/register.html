@@ -5,16 +5,19 @@ Register
 {% endblock %}
 
 {% block body %}
-    <form action="/register" method="post">
+    <form action="/register" class="register-form" method="post">
         <div>
-            <input name="username" placeholder="Username" type="text">
+            <input class="reg" id="username" name="username" placeholder="Username" type="text">
+            <p id="errorUsername"></p>
         </div>
         <div>
-            <input name="password" placeholder="Password" type="password">
+            <input class="reg" id="username" name="password" placeholder="Password" type="password">
+            <p id="errorPassword"></p>
         </div>
         <div>
-            <input name="confirmation" placeholder="Confirm Password" type="password">
+            <input class="reg" id="username" name="confirmation" placeholder="Confirm Password" type="password">
+            <p id="errorConfirmPassword"></p>
         </div>
-        <button class="but" type="submit">Register</button>
+        <button class="but" type="submit" onclick="register()">Register</button>
     </form>
 {% endblock %}

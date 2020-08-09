@@ -2,25 +2,27 @@
     font-family: 'Roboto', sans-serif;
 }
 
-h1{
+h1.open{
     text-align: left;
     margin: 30px;
     font-size:40px;
     font-weight:400;
     max-width:45%;
+    margin-top:65px;
 }
 
-h3{
+h3.open{
     text-align: left;
     max-width: 40%;
-    margin: 30px;
+    margin: 28px;
     font-weight:300;
+    font-size:25px;
 }
 
 .openimg{
     width:45%;
     position:absolute;
-    top:35%;
+    top:30%;
     left:53%;
     transform: translate(-50px, -50px);
 }
@@ -40,3 +42,72 @@ h3{
     width:50px;
     height:50px;
 }
+
+.profile-card{
+    display:block;
+    margin:0 auto;
+    width:55%;
+    height:300px;
+    border: 2px solid black;
+    margin-top:100px;
+}
+
+.my-profile h3{
+    margin:15px;
+    font-size:15px;
+}
+
+.register-form{
+    margin-top:50px;
+    padding-left:186px;
+    padding-right:186px;
+}
+
+.reg{
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.but{
+    color: white;
+    background-color:blue;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.5;
+    border-radius: 4px;
+}
+
+.but:hover{
+    opacity: .65;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}
+
+.return {
+    background-color: lightskyblue;
+    color: white;
+    height: 50px;
+    width: 110px;
+    top: 50%;
+}
+.wrapper {
+    text-align: center;
+}
+
+.reg {
+    text-align: center;
+}
+/* .errorUsername, .errorPassword {
+
+} */

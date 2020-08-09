@@ -50,7 +50,7 @@ def login():
         password = request.form.get("password")
         #ensure stuff was put in
         if not username:
-            return error("Must Provide a Username","/login")
+            return error("Must Provide a Username", "/login")
         elif not password:
             return error("Must Provide a Password", "/login")
         #make sure valid info
@@ -91,10 +91,15 @@ def register():
         return redirect("/profilePost")
     else:
         return render_template("register.html")
-
+        
+@app.route("/logout")
+def logout():
+    """Logout"""
+    #forget user
+    session.clear()
+    return redirect("/")
 
 @app.route("/")
-@login_required
 def index():
     """index"""
     return render_template("index.html")
@@ -105,19 +110,35 @@ def profilePost():
     """create profile"""
     if request.method == "POST":
         #get all info from form
-        username = request.form.get("username")
+        username = db.execute("SELECT username FROM user WHERE id=:user_id",user_id=session["user_id"])
         name = request.form.get("name")
         bio = request.form.get("bio")
-        interests = request.form.get("interests")
-        skills = request.form.get("skills")
+        interests1 = request.form.get("interest1")
+        interests2 = request.form.get("interest2")
+        interests3 = request.form.get("interest3")
+        interests4 = request.form.get("interest4")
+        if not interests1 or not interests2 or not interests3 or not interests4:
+            return error("must provide 4 interests","/profilePost")
+        interests = str(interests1)+"#"+str(interests2)+"#"+str(interests3)+"#"+str(interests4)
+        skills_all = ["design","html","C","react","java","node","linux","sql","mongodb","js","jquery","Cplusplus","ruby","go","Csharp","PHP","bash","swift"]
+        skills=""
+        for skill in skills_all:
+            if request.form.get(skill) != None:
+                if skills == "":
+                    skills += request.form.get(skill)
+                else:
+                    skills += "#" + request.form.get(skill)
         location = request.form.get("location")
         phone = request.form.get("phone")
         email = request.form.get("email")
         info = request.form.get("info")
         #make sure all filled
-        if not username or not name or not bio or not interests or not skills or not location or not email or not info:
+        if not name or not bio or skills=="" or not location or not phone or not email:
             return error("Requirements Not Satisfied", "/profilePost")
-        db.execute("INSERT INTO profile (username, name, bio, interests, skills, location, phone, email, info) VALUES (:username, :name, :bio, :interests, :skills, :location, :phone, :email, :info);", username=username, name=name, bio=bio, interests=interests, skills=skills, location=location, phone=phone, email=email, info=info)
+        if not info:
+            db.execute("INSERT INTO profile (id, username, name, bio, interests, skills, location, phone, email, info) VALUES (:user_id, :username, :name, :bio, :interests, :skills, :location, :phone, :email, :info);", user_id=session["user_id"], username=username, name=name, bio=bio, interests=interests, skills=skills, location=location, phone=phone, email=email, info=None)
+        else:
+            db.execute("INSERT INTO profile (id, username, name, bio, interests, skills, location, phone, email, info) VALUES (:user_id, :username, :name, :bio, :interests, :skills, :location, :phone, :email, :info);", user_id=session["user_id"], username=username, name=name, bio=bio, interests=interests, skills=skills, location=location, phone=phone, email=email, info=info)
         return redirect("/profile")
     else:
         return render_template("profilePost.html")

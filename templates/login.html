@@ -5,14 +5,12 @@
 {% endblock %}
 
 {% block body %}
-    <br>
-    <br>
-    <form action="/login" method="post">
+    <form action="/login" class="register-form" method="post">
         <div>
-            <input name="username" placeholder="Username" type="text">
+            <input class="reg" name="username" placeholder="Username" type="text">
         </div>
         <div>
-            <input name="password" placeholder="Password" type="password">
+            <input class="reg" name="password" placeholder="Password" type="password">
         </div>
         <button class="but" type="submit">Login</button>
     </form>

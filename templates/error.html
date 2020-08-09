@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block body %}
-    Error
-    {{message}}
+    <h1 class="error">Error, Something went wrong.</h1>
+    <h5 class="error">Please view the type of error below:<h5>
+    <p class = "error">{{message}}</p>
+    <br/>
+    <div class="wrapper">
+        <button class= "return" onclick = "history.back()">Go back</button>
+    </div>
 {% endblock %}
