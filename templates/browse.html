@@ -7,10 +7,11 @@ Browse
 {% block style %}
 <style>
     
-    .row{
-        padding:60px;
+  
+    .row {
+        margin-right: 0px;
+        padding: 60px;
     }
-    
     .browse-profiles{
         display: block;
         margin: 0 auto;
@@ -39,9 +40,8 @@ Browse
         font-size:13px;
         position:absolute;
         top:97%;
-        opacity:.8;
         transform: translate(-50px, -50px);
-        background-color:#64e986;
+        background-color:#64ca86;
         color:white;
     }
     
@@ -66,14 +66,92 @@ Browse
         margin-top:20px;
     }
     
+    form.ex input[type=text] {
+    margin: 0px;
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    background: #f1f1f1;
+    display: block;
+    }
+
+    form.ex button {
+    float: right;
+    width: 20%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+    }
+
+    form.ex button:hover {
+    background: #0b7dda;
+    }
+    
+    form.ex::after {
+    content: "";
+    clear: both;
+    display: table;
+    }
+    input[type=text], input[type=password],textarea, select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    }
     
 </style>
 
 {% endblock %}
 
 {% block body %}
-<input type="text" name="search" class="search-btn" placeholder="Search..">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<br>
+<br>
+<form class="ex" action="/browse" method="post" style="margin:auto;max-width:900px">
+    <input type="text" placeholder="Search.." name="search2">
+    <button type="submit"><i class="fa fa-search"></i></button>
+    <br>
+    <br>
+    <select id="category" name="category">
+        <option value="all">All</option>
+        <option value="design">Design</option>
+        <option value="html">HTML</option>
+        <option value="C">C</option>
+        <option value="react">React</option>
+        <option value="java">Java</option>
+        <option value="node">Node</option>
+        <option value="linux">Linux</option>
+        <option value="sql">SQL</option>
+        <option value="mongodb">MongoDB</option>
+        <option value="js">JavaScript</option>
+        <option value="jquery">JQuery</option>
+        <option value="Cplusplus">C++</option>
+        <option value="ruby">Ruby</option>
+        <option value="go">Go</option>
+        <option value="Csharp">C#</option>
+        <option value="PHP">PHP</option>
+        <option value="bash">Bash/shell/powershell</option>
+        <option value="swift">Swift</option>
+        <option value="python">Python</option>
+        <option value="typescript">TypeScript</option>
+        <option value="visualBasic">Visual Basic</option>
+        <option value="pbjC">Objective-C</option>
+        <option value="perl">Perl</option>
+        <option value="AI">ML/AI</option>
+    </select>
+</form>
+<br>
+<br>
 <div class="row">
     {% for row in rows %}
     <div class="browse-profiles">
@@ -81,12 +159,8 @@ Browse
             <div class="card-body">
                 <h5 class="card-title">{{ row["name"] }}</h5>
                 <p class="card-text des">Bio: {{ row["bio"] }}</p>
-                <p class="card-text des">Interests: {% for interest in row["interests"].split("#") %}
-                    {{ interest }}
-                    {% endfor %}</p>
-                    <p class="card-text des">Skills: {% for skill in row["skills"].split("#") %}
-                        {{ skill }}
-                        {% endfor %}
+                <p class="card-text des">Interests: {{ row["interest"] }}</p>
+                    <p class="card-text des">Skills: {{ row["skills"] }}
                     </p>
                     <form action="/profile" method="post">
                         <input type="hidden" name="person_id" value="{{row['id']}}">

@@ -8,10 +8,11 @@
 
 <style>
     .row{
-        padding:60px;
+        margin: 0px;
+        padding: 60px;
     }
     
-    .browse-profiles{
+    .browse-friends{
         display: block;
         margin: 0 auto;
         width: 70%;
@@ -27,7 +28,7 @@
         box-shadow: 0px 0px 5px 0px rgba(160,160,160,1);
     }
     
-    .browse-profiles:hover{
+    .browse-friends:hover{
         -webkit-box-shadow: 0px 0px 15px 3px rgba(211,211,211,1);
         -moz-box-shadow: 0px 0px 15px 3px rgba(211,211,211,1);
         box-shadow: 0px 0px 15px 3px rgba(211,211,211,1);
@@ -68,38 +69,41 @@
         cursor: pointer;
     }
 
+    .partnerHeader {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+
 </style>
 {% endblock %}
 
 
 {% block body %}
-<input type="search">
-<div class="row">
-    {% for friend in friends %}
-    <div class="browse-profiles">
-        <div class=" mb-4 back">
-            <div class="card-body">
-                <h5 class="card-title">{{ friend["name"] }}</h5>
-                <p class="card-text des">Bio: {{ friend["bio"] }}</p>
-                <p class="card-text des">Interests: {% for interest in friend["interests"].split("#") %}
-                    {{ interest }}
-                    {% endfor %}</p>
-                    <p class="card-text des">Skills: {% for skill in friend["skills"].split("#") %}
-                        {{ skill }}
-                        {% endfor %}
-                    </p>
-                    <form action="/profile" method="post">
-                        <input type="hidden" name="person_id" value="{{friend['id']}}">
-                        <input class="first btn btn-primary" type="submit" name="button" value="Visit Profile">
-                    </form>
-                    <form action="/partners" method="post">
-                        <input type="hidden" name="person_id" value="{{friend['id']}}">
-                        <input class="second btn btn-primary" type="submit" name="button" value="Remove">
-                    </form>
+
+    <h1 class="partnerHeader">Here Are Your Partners</h1>
+    <div class="row">
+        {% for friend in friends %}
+            <div class="browse-friends">
+                <div class=" mb-4 back">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ friend["name"] }}</h5>
+                        <p class="card-text des">Bio: {{ friend["bio"] }}</p>
+                        <p class="card-text des">Interests: {{ friend["interest"] }}</p>
+                        <p class="card-text des">Skills: {{ friend["skills"] }}
+                        </p>
+                        <form action="/profile" method="post">
+                            <input type="hidden" name="person_id" value="{{ friend['id'] }}">
+                            <input class="first btn btn-primary" type="submit" name="button" value="Visit Profile">
+                        </form>
+                        <form action="/remove" method="post">
+                            <input type="hidden" name="person_id_remove" value="{{friend['id']}}">
+                            <input class="second btn btn-primary" type="submit" name="button" value="Remove Partner">
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
         {% endfor %}
     </div>
-    
-    {% endblock %}
+
+{% endblock %}

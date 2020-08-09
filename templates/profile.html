@@ -8,21 +8,16 @@
     <style>
 
         .profile-page{
-            display:block;
-            margin:0 auto;
-            width:80%
+            margin-left:30%;
         }
         
         h1.profile-name{
-            font-size:30px;
+            font-size:33px;
         }
 
         h3.profile-name{
-            font-size:20px;
-        }
-
-        .sub{
-            font-size: 20px;
+            font-size:23px;
+            margin-right:100px;
         }
         
         .parent {
@@ -36,33 +31,27 @@
             margin-left: 150px;
             margin-right: -50px;
         }
-        
-        #editProfile{
-            height: 50px;
-            width: 110px;
+
+        .sub, .ans{
+            display: inline;
+        }
+
+        #editProfile,  #logOut{
+            height: 30px;
+            width: 100px;
             margin-top: 15px;
-            border: 2px solid blue;
+            border: 1px solid black;
+            border-radius: 4px;
             background-color: white;
-            border-radius: 10px;
-            color: black;
+            color: gray;
             text-align: center;
+            font-size: 12px;
         }
-        #editProfile:hover{
-            background-color: rgb(83, 83, 255);
+
+        #editProfile:hover, #logOut:hover{
+            transform: scale(1.1);
         }
-        #logOut{
-            height: 50px;
-            width: 110px;
-            margin-top: 15px;
-            border: 2px solid rgb(15, 209, 15);
-            background-color: white;
-            border-radius: 10px;
-            color: black;
-            text-align: center;
-        }
-        #logOut:hover{
-            background-color: rgb(145, 231, 95);
-        }
+
         #profilePart {
             display: flex;
         }
@@ -71,7 +60,27 @@
             border-radius: 8px;
             background-color:whitesmoke;
             font-size:15px;
+        }
 
+        #nameEtc {
+            height: 500px;
+        }
+
+        h4.sub{
+            font-size:17px;
+            width:55%;
+        }
+
+        p.ans{
+            font-size:15px;
+            width:55%;
+            font-weight:300;
+
+
+        }
+        .section{
+            margin-left:40px;
+            margin-bottom:15px;
         }
 
     </style>
@@ -81,7 +90,7 @@
 <div class="profile-page">
 <div class="parent">
     <br>
-    <div style="margin-left:100px;">
+    <div>
         <form action="/browse" style="display: inline;font-size:larger;">
             <button class="back" type="submit">
                 &#8592 Return to Browsing</button>
@@ -89,7 +98,7 @@
     <br>
     <br>
     <div id="profilePart">
-        <div id="nameEtc" style="margin-left:0px;"> 
+        <div id="nameEtc" > 
             <h1 class="profile-name">{{row["name"]}}</h1>
             <h3 class="profile-name"><i>@{{ row["username"] }}</i></h3>
             <form action="TODO">
@@ -100,38 +109,57 @@
             </form>
         </div>
         <div id="about">
-            <div style="margin-left:100px;">
-                <h4 class="sub">Bio:</h4>
-                    <p>{{row["bio"]}}</p>
+            <div>
+                
+                <div class="section">
+                <h4 class="sub" style="color: rgb(102, 51, 204);
+                background-color: rgb(236, 228, 252);">Bio:</h4>
+                <p class="ans">{{row["bio"]}}</p>
+                <br>  
             </div>
-    
-            <div style="margin-left:100px;">
-                <h4 class="sub">Interests:</h4>
-                        <p>{{row["interests"]}}</p>
-            </div>
-          
-            <div style="margin-left:100px;">
-                <h4 class="sub">Skills:</h4>
+
+                <div class="section">
+                <h4 class="sub" style="color: rgb(214, 54, 43);
+                background-color: rgb(254, 226, 219)">Interests:</h4>
+                <p class="ans" >{{row["interests"]}}</p>
+                <br></div>
+
+                <div class="section">
+
+                <h4 class="sub" style="color: rgb(204, 20, 123);
+                background-color: rgb(255, 226, 242);">Skills:</h4>
+                <p class="ans" >{{row["skills"]}}</p>
                 <br>
-                {% for skill in skills %}
-            </div>
-            <div style="text-align: center;">
-                <h4 class="sub">Location:</h4>
-                <p>{{row["location"]}}</p>
-            </div>
-            <div>
-                <h4 class="sub">Phone #:</h4>
-                <p>{{row["phone"]}}</p>
-            </div>
-            <div>
-                <h4 class="sub">Email:</h4>
-                <p>{{ row["email"] }}</p> 
-            </div>  
-            {% if row["info"] != None %}
-                <div>
-                    <h4 class="sub">Other Contacts:</h4>
-                    <p>{{row["info"]}}</p>
                 </div>
+                <div class="section">
+
+                <h4 class="sub"  style="color: rgb(0, 138, 45);
+                background-color: rgb(219, 242, 226);">Location:</h4>
+                <p class="ans"> {{row["location"]}}</p>
+                <br>                    </div>
+
+
+                <div class="section">
+                <h4 class="sub"   style="color: rgb(0, 106, 212);
+                background: rgb(219, 238, 255);">Phone #:</h4>
+                <p class="ans">{{row["phone"]}}</p>
+                <br>
+            </div>
+
+                <div class="section">
+
+                <h4 class="sub" style="color: rgb(255,255,0);
+                background-color: rgb(255,255,224);">Email:</h4>
+                <p class="ans">{{ row["email"] }}</p> 
+            {% if row["info"] != None %}<br>
+        </div>
+
+            <div class="section">
+
+                    <h4 class="sub" style="color: rgb(255, 166, 0);
+                    background-color: rgb(255, 236, 202);">Other Contacts:</h4>
+                    <p class="ans">{{row["info"]}}</p>
+                    </div>
             {% endif %}
         </div>
     </div>

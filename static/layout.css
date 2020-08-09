@@ -20,7 +20,7 @@ h3.open{
 }
 
 .openimg{
-    width:45%;
+    width:40%;
     position:absolute;
     top:33%;
     left:53%;
@@ -92,16 +92,17 @@ h3.open{
 }
 
 .error {
-    color: red;
+    color: #398aa8;
     text-align: center;
 }
 
 .return {
-    background-color: lightskyblue;
+    background-color: #46d3b5;
     color: white;
     height: 50px;
     width: 110px;
     top: 50%;
+    border-radius: 10px;
 }
 .wrapper {
     text-align: center;

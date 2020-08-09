@@ -25,4 +25,6 @@ CREATE TABLE friends
     username2 TEXT
 );
 
+SELECT * FROM friends;
+
 SELECT * FROM profile;

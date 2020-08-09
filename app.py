@@ -17,9 +17,10 @@ from helpers import error, login_required
 # Configure application
 app = Flask(__name__)
 
+
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-
+app.run(debug=True)
 # Ensure responses aren't cached
 @app.after_request
 def after_request(response):
@@ -98,7 +99,7 @@ def register():
         if not interests1 or not interests2 or not interests3 or not interests4:
             return error("must provide 4 interests","/profilePost")
         interests = str(interests1)+", "+str(interests2)+", "+str(interests3)+", "+str(interests4)
-        skills_all = ["design","html","C","react","java","node","linux","sql","mongodb","js","jquery","Cplusplus","ruby","go","Csharp","PHP","bash","swift"]
+        skills_all = ["design","html","C","react","java","node","linux","sql","mongodb","js","jquery","Cplusplus","ruby","go","Csharp","PHP","bash","swift","python","typescript", "visualBasic", "objC", "perl", "AI"]
         skills=""
         for skill in skills_all:
             if request.form.get(skill) != None:
@@ -164,29 +165,39 @@ def partners():
         friend_name = db.execute("SELECT username1 FROM friends WHERE username2 = :user", user=session["user_id"])
         if len(friend_name) != 0:
             friend_name=friend_name[0]
-        for friend in friend_name:
-            friendsName.append(friend)
+            for friend in friend_name["username1"]:
+                friendsName.append(friend)
         #check if your username is in the user2 slot
         friend_name2 = db.execute("SELECT username2 FROM friends WHERE username1 = :user", user=session["user_id"])
         if len(friend_name2) != 0:
             friend_name2=friend_name2[0]
-        for friend in friend_name2:
-            friendsName.append(friend)
-
+            for friend in friend_name2["username2"]:
+                friendsName.append(friend)
         friends=[]
-        for friend in friendsName:
-            row = db.execute("SELECT * FROM profile WHERE id=:person_id",person_id=friend)[0]
-            friends.append(row)
+        if friendsName != 0:
+            for friend in friendsName:
+                row = db.execute("SELECT * FROM profile WHERE id=:person_id",person_id=friend)
+                friends.append(row)
+            friends=friends[0]
         return render_template("partners.html", friends=friends)
+
+@app.route("/remove", methods=["POST","GET"])
+def partners():
+    """Show friends"""
+    if request.method == "POST":
+        person_id = request.form.get("person_id_remove")
+        #delete partner
+        db.execute("DELETE FROM friends WHERE username1=:user1 AND username2=:user2;", user1=session["user_id"],user2=person_id)
+        db.execute("DELETE FROM friends WHERE username2=:user1 AND username1=:user2;", user1=session["user_id"],user2=person_id)
+        return redirect("/partners")
 
 @app.route("/browse", methods=["POST","GET"])
 def browse():
     """Browse other people"""
     if request.method == "POST":
         #means something was searched
-        searchVal = request.form.get("searched")
-        searchArr = searchVal.split(" ")
-        searchArrCopy = searchArr
+        category = request.form.get("category")
+        searchVal = request.form.get("search2")
         #filter out reg words from search Arr
         words = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", 
         "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", 
@@ -199,28 +210,54 @@ def browse():
         "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", 
         "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", 
         "just", "don", "should", "now"]
-        #loop through all words in stop words array
-        for word in words:
-            #if word in the searched items
-            if word in searchArr:
-                #remove it from the copy
-                searchArrCopy.remove(word)
-        #define the reg array as the copy array that has been updates
-        searchArr = searchArrCopy
-        #if there are no searches return all profile
-        if len(searchArr) == 0:
-            return redirect("/browse")
-        #if there are items in the search bar return profiles with matching word stuff
+        #if there are no searches
+        if not searchVal:
+            #if the category bar is unchanged
+            if category == "all":
+                #get all from internship database
+                rows = db.execute("SELECT * FROM profile WHERE id IS NOT :user",user=session["user_id"])
+                return render_template("browse.html", rows=rows)
+            #if a category has been selected
+            else:
+                #get only rows with category from internship database
+                rows = db.execute(
+                    "SELECT * FROM profile WHERE skills LIKE ('%' || :category || '%') AND id IS NOT :user", category=category,user=session["user_id"])
+                print(rows)
+                return render_template("browse.html", rows=rows)
+        #if there are items in the search bar
         else:
-            #get peoples profile (rows) that correspond with search from profile database
-            for val in searchArr:
-                rows = []
-                rowsTemp = db.execute(
-                    "SELECT * FROM profile WHERE username LIKE ('%' || :search || '%') OR bio LIKE ('%' || :search || '%') OR skills LIKE ('%' || :search || '%') OR interestes LIKE ('%' || :search || '%') OR location LIKE ('%' || :search || '%')", search=val)
-                for row in rowsTemp:
-                    if row not in rows:
-                        rows.append(row)
-            return render_template("browse.html", rows=rows)
+            searchArr = searchVal.split(" ")
+            searchArrCopy = searchArr
+            #loop through all words in stop words array
+            for word in words:
+                #if word in the searched items
+                if word in searchArr:
+                    #remove it from the copy
+                    searchArrCopy.remove(word)
+            #define the reg array as the copy array that has been updates
+            searchArr = searchArrCopy
+            #if the category bar has nothing selected
+            if category == "all":
+                #get rows that correspond with search from internship database
+                for val in searchArr:
+                    rows = []
+                    rowsTemp = db.execute(
+                    "SELECT * FROM profile WHERE username LIKE ('%' || :search || '%') OR bio LIKE ('%' || :search || '%') OR skills LIKE ('%' || :search || '%') OR interestes LIKE ('%' || :search || '%') OR location LIKE ('%' || :search || '%') AND id IS NOT :user", search=val,user=session["user_id"])
+                    for row in rowsTemp:
+                        if row not in rows:
+                            rows.append(row)
+                return render_template("browse.html", rows=rows)
+            #if there is a category selected
+            else:
+                #get rows that correspond with search and category from internship database
+                for val in searchArr:
+                    rows=[]
+                    rowsTemp = db.execute(
+                    "SELECT * FROM profile WHERE username LIKE ('%' || :search || '%') OR bio LIKE ('%' || :search || '%') OR skills LIKE ('%' || :search || '%') OR interestes LIKE ('%' || :search || '%') OR location LIKE ('%' || :search || '%') AND id IS NOT :user", search=val,user=session["user_id"])
+                    for row in rowsTemp:
+                        if row not in rows and category in row["skills"]:
+                            rows.append(row)
+                return render_template("browse.html", rows = rows)
     else:
         #if just clicked on to browse all
         rows = db.execute("SELECT * FROM profile")
