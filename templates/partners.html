@@ -15,12 +15,11 @@
     .browse-friends{
         display: block;
         margin: 0 auto;
-        width: 70%;
-        height:300px;
+        width: 60%;
+        height:380px;
         margin-bottom:65px;
         border: 1px solid white;
         cursor: pointer;
-        background-color: #edf3ff;
         color:black;
         position:relative;
         -webkit-box-shadow: 0px 0px 5px 0px rgba(160,160,160,1);
@@ -34,20 +33,21 @@
         box-shadow: 0px 0px 15px 3px rgba(211,211,211,1);
     }
     
+
     input.btn{
         margin:10px;
         display: inline-block;
         font-size:13px;
         position:absolute;
         top:97%;
-        opacity:.8;
         transform: translate(-50px, -50px);
-        background-color:#64e986;
-        color:white;
+        background-color: white;
+        border: 1px solid gray;
+        color:black;
     }
     
     input.btn:hover{
-        background-color:#003b72;
+        background-color:blue;
         opacity:.9;
     }
     
@@ -57,7 +57,10 @@
     }
     
     .second{
-        left:19%;
+        left:21%;
+    }
+    .third {
+        left:32%;
     }
     .search-btn{
         width: 20%;
@@ -65,7 +68,7 @@
         color: white;
         font-size: 17px;
         border: 1px solid grey;
-        border-left: none; /* Prevent double borders */
+        border-left: none; 
         cursor: pointer;
     }
 
@@ -74,6 +77,15 @@
         margin-top: 20px;
     }
 
+    h6{
+        display: inline;
+        float:left;
+        margin:5px;
+        line-height: .9;
+    }
+    p{
+        font-weight:300;
+    }
 
 </style>
 {% endblock %}
@@ -88,18 +100,21 @@
                 <div class=" mb-4 back">
                     <div class="card-body">
                         <h5 class="card-title">{{ friend["name"] }}</h5>
-                        <p class="card-text des">Bio: {{ friend["bio"] }}</p>
-                        <p class="card-text des">Interests: {{ friend["interests"] }}</p>
-                        <p class="card-text des">Skills: {{ friend["skills"] }}
-                        </p>
-                        <form action="/profile" method="post">
-                            <input type="hidden" name="person_id" value="{{ friend['id'] }}">
-                            <input class="first btn btn-primary" type="submit" name="button" value="Visit Profile">
-                        </form>
-                        <form action="/remove" method="post">
-                            <input type="hidden" name="person_id_remove" value="{{friend['id']}}">
-                            <input class="second btn btn-primary" type="submit" name="button" value="Remove Partner">
-                        </form>
+                        <h6 class="card-text des pink">Bio:</h6><p> {{ friend["bio"] }}</p>
+                        <h6 class="card-text des green">Interests:</h6><p> {{ friend["interests"] }}</p>
+                            <h6 class="card-text des blue">Skills:</h6><p> {{ friend["skills"] }}</p>
+                            <h6 class="card-text des red">Location:</h6><p> {{ friend["location"] }}</p>
+                            <form action="/profile" method="post">
+                                <input type="hidden" name="person_id" value="{{friend['id']}}">
+                                <input class="first btn btn-primary" type="submit" name="button" value="Visit Profile">
+                            </form>
+                            <form action="/remove" method="post">
+                                <input type="hidden" name="person_id_remove" value="{{friend['id']}}">
+                                <input class="second btn btn-primary" type="submit" name="button" value="Remove">
+                            </form>
+                            <form action="/project">
+                                <input class="third btn btn-primary" type="submit" name="button" value="Post a Project">
+                            </form>
                     </div>
                 </div>
             </div>

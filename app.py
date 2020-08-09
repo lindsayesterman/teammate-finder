@@ -60,7 +60,7 @@ def login():
             return error("Invalid Username and/or Password", "/login")
         #set user_id in session
         session["user_id"] = rows[0]["id"]
-        return redirect("/")
+        return redirect("/index")
     else:
         return render_template("login.html")
 
@@ -134,6 +134,17 @@ def index():
     """index"""
     return render_template("index.html")
 
+@app.route("/index")
+@login_required
+def index2():
+    """index"""
+    return render_template("index2.html")
+
+@app.route("/about")
+def about():
+    """index"""
+    return render_template("about.html")
+
 @app.route("/profile", methods=["GET","POST"])
 def profile():
     """Show profile"""
@@ -142,17 +153,67 @@ def profile():
         #if clicked on friend profile
         person_id = request.form.get("person_id")
         row = db.execute("SELECT * FROM profile WHERE id = :user_id", user_id=person_id)[0]
-        return render_template("profile.html",row=row)
+        return render_template("profile.html",row=row,yours=None)
     else:
         #if going to your own profile
         row = db.execute("SELECT * FROM profile WHERE id = :user_id", user_id=session["user_id"])[0]
-        return render_template("profile.html",row=row)
+        return render_template("profile.html",row=row,yours="yes")
+
+@app.route("/updateProf", methods=["GET","POST"])
+def updateProf():
+    """Register"""
+    if request.method == "POST":
+        #CREATE profile stuff
+        name = request.form.get("name")
+        bio = request.form.get("bio")
+        interests1 = request.form.get("interest1")
+        interests2 = request.form.get("interest2")
+        interests3 = request.form.get("interest3")
+        interests4 = request.form.get("interest4")
+        if not interests1 or not interests2 or not interests3 or not interests4:
+            return error("must provide 4 interests","/profilePost")
+        interests = str(interests1)+", "+str(interests2)+", "+str(interests3)+", "+str(interests4)
+        skills_all = ["design","html","C","react","java","node","linux","sql","mongodb","js","jquery","Cplusplus","ruby","go","Csharp","PHP","bash","swift","python","typescript", "visualBasic", "objC", "perl", "AI"]
+        skills=""
+        for skill in skills_all:
+            if request.form.get(skill) != None:
+                if skills == "":
+                    skills += request.form.get(skill)
+                else:
+                    skills += ", " + request.form.get(skill)
+        location = request.form.get("location")
+        phone = request.form.get("phone")
+        email = request.form.get("email")
+        info = request.form.get("info")
+        #make sure all filled
+        if not name or not bio or skills=="" or not location or not phone or not email:
+            return error("Requirements Not Satisfied", "/profilePost")
+        if not info:
+            info = None
+        db.execute("UPDATE profile SET name=:name, bio=:bio,interests=:interests, skills=:skills,location=:location,phone=:phone,email=:email,info=:info WHERE id=:user_id;", user_id=session["user_id"], name=name, bio=bio, interests=interests, skills=skills, location=location, phone=phone, email=email, info=info)
+        return redirect("/profile")
+
+@app.route("/updateProf2", methods=["GET","POST"])
+def updateProf2():
+    """Register"""
+    if request.method == "POST":
+        row = request.form.get("row")
+        #unwraps the dict form the string
+        row = ast.literal_eval(row)
+        interests = row["interests"].split(", ")
+        interest1 = interests[0]
+        interest2 = interests[1]
+        interest3 = interests[2]
+        interest4 = interests[3]
+        return render_template("profilePost2.html",row=row,interest1=interest1,interest2=interest2,interest3=interest3,interest4=interest4)
 
 @app.route("/partners", methods=["POST","GET"])
 def partners():
     """Show friends"""
     if request.method == "POST":
         person_id = request.form.get("person_id")
+        if person_id == session["user_id"]:
+            return error("Cannot partner with self","/browse")
         #check if partening already exists
         prev = db.execute("SELECT * FROM friends WHERE username2 = :user AND username1=:user1", user=session["user_id"],user1=person_id)
         prev2 = db.execute("SELECT * FROM friends WHERE username1 = :user  AND username2=:user2", user=session["user_id"],user2=person_id)
@@ -180,13 +241,15 @@ def partners():
         #create array for profiles of partners
         friends=[]
         #if not nothing
-        if friendsName != 0:
+        if len(friendsName) != 0:
             #loop through every id of friends
             for friend in friendsName:
                 #append their matching profile row
-                row = db.execute("SELECT * FROM profile WHERE id=:person_id",person_id=friend)
+                row = db.execute("SELECT * FROM profile WHERE id=:person_id",person_id=friend)[0]
                 friends.append(row)
         #display the partners by inputting the list of friend's profiles
+        if len(friends) ==0:
+            return render_template("noPartners.html")
         return render_template("partners.html", friends=friends)
 
 @app.route("/remove", methods=["POST","GET"])
@@ -223,7 +286,7 @@ def browse():
             #if the category bar is unchanged
             if category == "all":
                 #get all from internship database
-                rows = db.execute("SELECT * FROM profile WHERE NOT id=:user",user=session["user_id"])
+                rows = db.execute("SELECT * FROM profile WHERE id NOT IN (:user_id)",user_id=session["user_id"])
                 return render_template("browse.html", rows=rows)
             #if a category has been selected
             else:
@@ -250,7 +313,7 @@ def browse():
                 for val in searchArr:
                     rows = []
                     rowsTemp = db.execute(
-                    "SELECT * FROM profile WHERE username LIKE ('%' || :search || '%') OR bio LIKE ('%' || :search || '%') OR skills LIKE ('%' || :search || '%') OR interests LIKE ('%' || :search || '%') OR location LIKE ('%' || :search || '%') AND NOT id=:user", search=val,user=session["user_id"])
+                    "SELECT * FROM profile WHERE id NOT IN (:user_id) AND (username LIKE ('%' || :search || '%') OR bio LIKE ('%' || :search || '%') OR skills LIKE ('%' || :search || '%') OR interests LIKE ('%' || :search || '%') OR location LIKE ('%' || :search || '%'))", search=val,user_id=session["user_id"])
                     for row in rowsTemp:
                         if row not in rows:
                             rows.append(row)
@@ -261,12 +324,91 @@ def browse():
                 for val in searchArr:
                     rows=[]
                     rowsTemp = db.execute(
-                    "SELECT * FROM profile WHERE username LIKE ('%' || :search || '%') OR bio LIKE ('%' || :search || '%') OR skills LIKE ('%' || :search || '%') OR interests LIKE ('%' || :search || '%') OR location LIKE ('%' || :search || '%') AND NOT id=:user", search=val,user=session["user_id"])
+                    "SELECT * FROM profile WHERE id NOT IN (:user_id) AND (username LIKE ('%' || :search || '%') OR bio LIKE ('%' || :search || '%') OR skills LIKE ('%' || :search || '%') OR interests LIKE ('%' || :search || '%') OR location LIKE ('%' || :search || '%'))", search=val,user_id=session["user_id"])
                     for row in rowsTemp:
                         if row not in rows and category in row["skills"]:
                             rows.append(row)
                 return render_template("browse.html", rows = rows)
     else:
         #if just clicked on to browse all
-        rows = db.execute("SELECT * FROM profile")
+        rows = db.execute("SELECT * FROM profile WHERE id NOT IN (:user_id)",user_id=session["user_id"])
         return render_template("browse.html",rows=rows)
+
+
+@app.route("/view", methods=["POST","GET"])
+def view():
+    """Browse other people"""
+    if request.method == "POST":
+        #means something was searched
+        searchVal = request.form.get("search2")
+        #filter out reg words from search Arr
+        words = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", 
+        "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", 
+        "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", 
+        "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", 
+        "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", 
+        "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", 
+        "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", 
+        "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", 
+        "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", 
+        "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", 
+        "just", "don", "should", "now"]
+        #if there are no searches
+        if not searchVal:
+            #get all from internship database
+            rows = db.execute("SELECT * FROM projects")
+            return render_template("view.html", rows=rows)
+        #if there are items in the search bar
+        else:
+            searchArr = searchVal.split(" ")
+            searchArrCopy = searchArr
+            #loop through all words in stop words array
+            for word in words:
+                #if word in the searched items
+                if word in searchArr:
+                    #remove it from the copy
+                    searchArrCopy.remove(word)
+            #define the reg array as the copy array that has been updates
+            searchArr = searchArrCopy
+            #get rows that correspond with search from internship database
+            for val in searchArr:
+                rows = []
+                rowsTemp = db.execute(
+                "SELECT * FROM projects WHERE (title LIKE ('%' || :search || '%') OR desc LIKE ('%' || :search || '%') OR users LIKE ('%' || :search || '%')", search=val)
+                for row in rowsTemp:
+                    if row not in rows:
+                        rows.append(row)
+            return render_template("view.html", rows=rows)
+    else:
+        #if just clicked on to browse all
+        rows = db.execute("SELECT * FROM projects")
+        return render_template("view.html",rows=rows)
+
+
+@app.route("/project", methods=["GET", "POST"])
+def project():
+    """Show portfolio of stocks"""
+    if request.method == "POST":
+        #get all values
+        title = request.form.get("title")
+        users = request.form.get("users")
+        desc = request.form.get("desc")
+        url = request.form.get("url")
+        #make sure all filled
+        if not title or not users or not desc or not url:
+            return error("Requirements Not Satisfied", "/project")
+        #insert into database table
+        db.execute("INSERT INTO projects (id,title,users,desc,url) VALUES (:user_id,:title,:users,:desc,:url)", user_id=session["user_id"], title=title, users=users, desc=desc, url=url)
+        return redirect("/view")
+    else:
+        return render_template("postProjects.html")
+
+@app.route("/removeProj", methods=["POST","GET"])
+def removeProj():
+    """Show friends"""
+    if request.method == "POST":
+        #return url
+        url = request.form.get("url")
+        #delete project with same url
+        db.execute("DELETE FROM projects WHERE url=:url", url=url)
+        return redirect("/view")

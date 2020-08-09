@@ -1,0 +1,173 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Browse
+{% endblock %}
+
+{% block style %}
+<style>
+    .row {
+        margin-right: 0px;
+        padding: 60px;
+    }
+
+    .browse-profiles {
+        display: block;
+        margin: 0 auto;
+        width: 60%;
+        height: 380px;
+        margin-bottom: 65px;
+        border: 1px solid white;
+        cursor: pointer;
+        color: black;
+        position: relative;
+        -webkit-box-shadow: 0px 0px 5px 0px rgba(160, 160, 160, 1);
+        -moz-box-shadow: 0px 0px 5px 0px rgba(160, 160, 160, 1);
+        box-shadow: 0px 0px 5px 0px rgba(160, 160, 160, 1);
+    }
+
+    .browse-profiles:hover {
+        -webkit-box-shadow: 0px 0px 15px 3px rgba(211, 211, 211, 1);
+        -moz-box-shadow: 0px 0px 15px 3px rgba(211, 211, 211, 1);
+        box-shadow: 0px 0px 15px 3px rgba(211, 211, 211, 1);
+    }
+
+    input.btn {
+        margin: 10px;
+        display: inline-block;
+        font-size: 13px;
+        position: absolute;
+        top: 97%;
+        transform: translate(-50px, -50px);
+        background-color: white;
+        border: 1px solid gray;
+        color: black;
+    }
+
+    input.btn:hover {
+        background-color: blue;
+        opacity: .9;
+    }
+
+    .first {
+        float: left;
+        left: 7%;
+    }
+
+    .second {
+        left: 21%;
+    }
+
+    .search-btn {
+        display: block;
+        margin: 0 auto;
+        width: 40%;
+        height: 45px;
+        margin-top: 20px;
+    }
+
+    form.ex input[type=text] {
+        margin: 0px;
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        background: #f1f1f1;
+        display: block;
+    }
+
+    form.ex button {
+        float: right;
+        width: 200px;
+        padding: 10px;
+        background: #2196F3;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+    }
+
+    form.ex button:hover {
+        background: #0b7dda;
+    }
+
+    form.ex::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    input[type=text],
+    input[type=password],
+    textarea {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    h6 {
+        display: inline;
+        float: left;
+        margin: 5px;
+        line-height: .9;
+    }
+
+    p {
+        font-weight: 300;
+    }
+
+    #searchBar {
+        display: flex;
+    }
+
+    #catergory {
+        width: 200px;
+    }
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<br>
+<br>
+<form class="ex" action="/project" method="post" style="margin:auto;max-width:900px">
+    <div id="searchBar">
+        <input type="text" placeholder="Search.." name="search2" class="search">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </div>
+</form>
+<br>
+<br>
+<div class="row">
+    {% for row in rows %}
+    <div class="browse-profiles">
+        <div class=" mb-4 back">
+            <div class="card-body">
+                <h5 class="card-title">{{ row["title"] }}</h5>
+                <h6 class="card-text des pink">Description:</h6>
+                <p> {{ row["desc"] }}</p>
+                <h6 class="card-text des green">Creators:</h6>
+                <p> {{ row["users"] }}</p>
+                <form action="{{ row['url'] }}" target="_blank">
+                    <input class="first btn btn-primary" type="submit" value="Visit Project">
+                </form>
+                {% if session.user_id == row["id"] %}
+                    <form action="/removeProj" method="post">
+                        <input type="hidden" name="url" value="{{row['url']}}">
+                        <input class="second btn btn-primary" type="submit" name="button" value="Remove Project">
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+{% endblock %}

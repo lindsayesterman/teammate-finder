@@ -8,7 +8,7 @@ h1.open{
     font-size:40px;
     font-weight:400;
     max-width:45%;
-    margin-top:65px;
+    margin-top:63px;
 }
 
 h3.open{
@@ -16,7 +16,7 @@ h3.open{
     max-width: 40%;
     margin: 28px;
     font-weight:300;
-    font-size:25px;
+    font-size:23px;
 }
 
 .openimg{
@@ -103,6 +103,7 @@ h3.open{
     width: 110px;
     top: 50%;
     border-radius: 10px;
+
 }
 .wrapper {
     text-align: center;
@@ -136,8 +137,9 @@ h3.open{
     color: rgb(0, 138, 45);
     background-color: rgb(219, 242, 226);
 }
+
 .yellow{
-    color: rgb(255,255,0);
+    color: #FFD700;
     background-color: rgb(255,255,224);
 }
 

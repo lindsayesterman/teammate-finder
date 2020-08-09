@@ -7,7 +7,6 @@ Browse
 {% block style %}
 <style>
     
-  
     .row {
         margin-right: 0px;
         padding: 60px;
@@ -16,7 +15,7 @@ Browse
         display: block;
         margin: 0 auto;
         width: 60%;
-        height:340px;
+        height:380px;
         margin-bottom:65px;
         border: 1px solid white;
         cursor: pointer;
@@ -56,29 +55,30 @@ Browse
     }
     
     .second{
-        left:19%;
+        left:20%;
     }
+    
     .search-btn{
         display:block;
         margin: 0 auto;
         width:40%;
-        height:40px;
+        height:45px;
         margin-top:20px;
     }
     
     form.ex input[type=text] {
-    margin: 0px;
-    padding: 10px;
-    font-size: 17px;
-    border: 1px solid grey;
-    float: left;
-    background: #f1f1f1;
-    display: block;
+        margin: 0px;
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        background: #f1f1f1;
+        display: block;
     }
 
     form.ex button {
     float: right;
-    width: 20%;
+    width: 200px;
     padding: 10px;
     background: #2196F3;
     color: white;
@@ -98,7 +98,7 @@ Browse
     display: table;
     }
 
-    input[type=text], input[type=password],textarea, select {
+    input[type=text], input[type=password],textarea{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -116,7 +116,13 @@ Browse
     p{
         font-weight:300;
     }
-    
+    #searchBar {
+        display: flex;  
+    }
+    #catergory {
+        width: 200px;
+    }
+
 </style>
 
 {% endblock %}
@@ -127,49 +133,50 @@ Browse
 <br>
 <br>
 <form class="ex" action="/browse" method="post" style="margin:auto;max-width:900px">
-    <input type="text" placeholder="Search.." name="search2">
-    <button type="submit"><i class="fa fa-search"></i></button>
-    <br>
-    <br>
-    <select id="category" name="category">
-        <option value="all">All</option>
-        <option value="design">Design</option>
-        <option value="html">HTML</option>
-        <option value="C">C</option>
-        <option value="react">React</option>
-        <option value="java">Java</option>
-        <option value="node">Node</option>
-        <option value="linux">Linux</option>
-        <option value="sql">SQL</option>
-        <option value="mongodb">MongoDB</option>
-        <option value="js">JavaScript</option>
-        <option value="jquery">JQuery</option>
-        <option value="Cplusplus">C++</option>
-        <option value="ruby">Ruby</option>
-        <option value="go">Go</option>
-        <option value="Csharp">C#</option>
-        <option value="PHP">PHP</option>
-        <option value="bash">Bash/shell/powershell</option>
-        <option value="swift">Swift</option>
-        <option value="python">Python</option>
-        <option value="typescript">TypeScript</option>
-        <option value="visualBasic">Visual Basic</option>
-        <option value="pbjC">Objective-C</option>
-        <option value="perl">Perl</option>
-        <option value="AI">ML/AI</option>
-    </select>
+    <div id="searchBar">
+        <select id="category" name="category">
+            <option value="all">All</option>
+            <option value="design">Design</option>
+            <option value="html">HTML</option>
+            <option value="C">C</option>
+            <option value="react">React</option>
+            <option value="java">Java</option>
+            <option value="node">Node</option>
+            <option value="linux">Linux</option>
+            <option value="sql">SQL</option>
+            <option value="mongodb">MongoDB</option>
+            <option value="js">JavaScript</option>
+            <option value="jquery">JQuery</option>
+            <option value="Cplusplus">C++</option>
+            <option value="ruby">Ruby</option>
+            <option value="go">Go</option>
+            <option value="Csharp">C#</option>
+            <option value="PHP">PHP</option>
+            <option value="bash">Bash/shell/powershell</option>
+            <option value="swift">Swift</option>
+            <option value="python">Python</option>
+            <option value="typescript">TypeScript</option>
+            <option value="visualBasic">Visual Basic</option>
+            <option value="pbjC">Objective-C</option>
+            <option value="perl">Perl</option>
+            <option value="AI">ML/AI</option>
+        </select>
+        <input type="text" placeholder="Search.." name="search2" class="search">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </div>
 </form>
 <br>
 <br>
 <div class="row">
     {% for row in rows %}
-    <div class="browse-profiles">
+    <div class="browse-profiles" action="/profile" method="post">
         <div class=" mb-4 back">
             <div class="card-body">
                 <h5 class="card-title">{{ row["name"] }}</h5>
                 <h6 class="card-text des pink">Bio:</h6><p> {{ row["bio"] }}</p>
                 <h6 class="card-text des green">Interests:</h6><p> {{ row["interests"] }}</p>
                     <h6 class="card-text des blue">Skills:</h6><p> {{ row["skills"] }}</p>
+                    <h6 class="card-text des red">Location:</h6><p> {{ row["location"] }}</p>
                     <form action="/profile" method="post">
                         <input type="hidden" name="person_id" value="{{row['id']}}">
                         <input class="first btn btn-primary" type="submit" name="button" value="Visit Profile">
@@ -183,5 +190,5 @@ Browse
         </div>
         {% endfor %}
     </div>
-    
+</div>
     {% endblock %}

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Partners
+{% endblock %}
+
+{% block style %}
+<style>
+    .noPartners {
+        text-align: center;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+    <h1 class="noPartners" style="margin-top: 200px; margin-bottom: 20px;">You Currently Have No Partners</h1>
+    <br>
+    <h5 class="noPartners">Go to browse to find some!<h5>
+    <br>
+    <form action="/browse">
+        <button class= "return">Browse</button>
+    </form>
+{% endblock %}

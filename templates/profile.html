@@ -8,11 +8,11 @@
     <style>
 
         .profile-page{
-            margin-left:30%;
+            margin-left:25%;
         }
         
         h1.profile-name{
-            font-size:33px;
+            font-size:30px;
         }
 
         h3.profile-name{
@@ -36,7 +36,7 @@
             display: inline;
         }
 
-        #editProfile,  #logOut{
+        .editProfile,  #logOut, button.back, #partnerUp{
             height: 30px;
             width: 100px;
             margin-top: 15px;
@@ -47,8 +47,8 @@
             text-align: center;
             font-size: 12px;
         }
-
-        #editProfile:hover, #logOut:hover{
+         
+        .editProfile:hover, #logOut:hover, button.back:hover, #partnerUp:hover{
             transform: scale(1.1);
         }
 
@@ -56,12 +56,6 @@
             display: flex;
         }
         
-        button.back{
-            border-radius: 8px;
-            background-color:whitesmoke;
-            font-size:15px;
-        }
-
         #nameEtc {
             height: 500px;
         }
@@ -69,6 +63,10 @@
         h4.sub{
             font-size:17px;
             width:55%;
+        }
+
+        .hidden{
+            display:none;
         }
 
         p.ans{
@@ -83,6 +81,10 @@
             margin-bottom:15px;
         }
 
+        .edit{
+            margin-left:20px;
+        }
+
 
     </style>
 {% endblock %}
@@ -94,7 +96,7 @@
     <div>
         <form action="/browse" style="display: inline;font-size:larger;">
             <button class="back" type="submit">
-                &#8592 Return to Browsing</button>
+                &#8592 Back</button>
         </form>
     <br>
     <br>
@@ -102,9 +104,17 @@
         <div id="nameEtc" > 
             <h1 class="profile-name">{{row["name"]}}</h1>
             <h3 class="profile-name"><i>@{{ row["username"] }}</i></h3>
-            <form action="TODO">
-                <input id="editProfile" type="submit" value="Edit Profile"/>
-            </form>
+            {% if yours %}
+                <form action="/updateProf2" method="post">
+                    <input type="hidden" name="row" value="{{row}}">
+                    <input class="second btn btn-primary" id="partnerUp" type="submit" name="button" value="Edit Profile">
+                </form>
+            {% else %}
+                <form action="/partners" method="post">
+                    <input type="hidden" name="person_id" value="{{row['id']}}">
+                    <input class="second btn btn-primary" id="partnerUp" type="submit" name="button" value="Partner Up">
+                </form>
+            {% endif %}
             <form action="#">
                 <input id="logOut" type="submit" value="Log Out" href="/logout"/>
             </form>
@@ -113,45 +123,44 @@
             <div>
                 
                 <div class="section">
-                <h4 class="sub purple" >Bio:</h4>
+                <h4 class="sub purple bio" id="bio" >Bio:</h4>
                 <p class="ans">{{row["bio"]}}</p>
                 <br>  
             </div>
 
                 <div class="section">
-                <h4 class="sub red">Interests:</h4>
+                <h4 class="sub red interests">Interests:</h4>
                 <p class="ans" >{{row["interests"]}}</p>
                 <br></div>
 
                 <div class="section">
 
-                <h4 class="sub pink" >Skills:</h4>
+                <h4 class="sub pink skills" >Skills:</h4>
                 <p class="ans" >{{row["skills"]}}</p>
                 <br>
                 </div>
-                <div class="section">
 
-                <h4 class="sub green">Location:</h4>
+                <div class="section">
+                <h4 class="sub green location">Location:</h4>
                 <p class="ans"> {{row["location"]}}</p>
-                <br>                    </div>
+                <br>    
+                </div>
 
 
                 <div class="section">
-                <h4 class="sub blue">Phone #:</h4>
+                <h4 class="sub blue phone">Phone #:</h4>
                 <p class="ans">{{row["phone"]}}</p>
                 <br>
             </div>
 
                 <div class="section">
-
-                <h4 class="sub yellow">Email:</h4>
+                <h4 class="sub yellow email">Email:</h4>
                 <p class="ans">{{ row["email"] }}</p> 
             {% if row["info"] != None %}<br>
         </div>
 
             <div class="section">
-
-                    <h4 class="sub orange">Other Contacts:</h4>
+                    <h4 class="sub orange other">Other Contacts:</h4>
                     <p class="ans">{{row["info"]}}</p>
                     </div>
             {% endif %}
@@ -159,6 +168,10 @@
     </div>
 </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="/static/script.js"></script>
+
 {% endblock %}
 
 

@@ -1,0 +1,502 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Profile Edit
+{% endblock %}
+
+{% block style %}
+<style>
+    .page {
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    td {
+        padding: 20px;
+    }
+
+    form {
+        margin-left: 200px;
+        margin-right: 200px;
+    }
+
+    table {
+        background-color: #dfdfdf;
+        text-align: left;
+        display: block;
+        margin: 0 auto;
+        border-radius: 25px;
+        width: 97.5%;
+    }
+
+    .interest {
+        width: 24%;
+    }
+
+    h1.profile-info {
+        text-align: center;
+        margin: 30px;
+        font-size: 40px;
+        font-weight: 400;
+        margin-top: 65px;
+    }
+
+    h3.profile-info {
+        text-align: center;
+        margin: 28px;
+        font-weight: 300;
+        font-size: 25px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<h1 class="profile-info">Edit your profile below</h1>
+
+
+<form action="/updateProf" method="post">
+    <div>
+        <label>Your Name:</label>
+        <input class="reg" rows="5" cols="60" name="name" style="text-align: left;" type="name" value="{{row['name']}}">
+    </div>
+    <br>
+    <div>
+        <label>Summary/bio:</label>
+        <textarea class="reg" rows="5" cols="60" name="bio" style="text-align: left;" type="text">{{row['bio']}}</textarea>
+    </div>
+    <br>
+    <div>
+        <label>What are your interests?</label><br>
+        <input class="reg interest" name="interest1" value="{{interest1}}" type="text">
+        <input class="reg interest" name="interest2" value="{{interest2}}" type="text">
+        <input class="reg interest" name="interest3" value="{{interest3}}" type="text">
+        <input class="reg interest" name="interest4" value="{{interest4}}" type="text">
+    </div>
+    <br>
+    <div>
+        <label>What are your CS skills?</label>
+        <br>
+        <table>
+            <tr>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="design" name="design" value="Design" checked>
+                            <label for="design"> Design</label>
+                        </div>
+                    {% else %}
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="design" name="design" value="Design">
+                            <label for="design"> Design</label>
+                        </div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if "HTML/CSS" in row["skills"] %}
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="html" name="html" value="HTML/CSS" checked>
+                            <label for="html"> HTML/CSS</label>
+                        </div>
+                    {% else %}
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="html" name="html" value="HTML/CSS">
+                            <label for="html"> HTML/CSS</label>
+                        </div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                        <div style="white-space: nowrap;">
+                            <input type="checkbox" id="C" name="C" value="C">
+                            <label for="C"> C</label>
+                        </div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="react" name="react" value="React">
+                        <label for="react"> React</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="java" name="java" value="Java">
+                        <label for="java"> Java</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="node" name="node" value="Node">
+                        <label for="node"> Node</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="linux" name="linux" value="Linux">
+                        <label for="linux"> Linux</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="sql" name="sql" value="SQL">
+                        <label for="sql"> SQL</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="mongodb" name="mongodb" value="MongoDB">
+                        <label for="mongodb"> MongoDB</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="js" name="js" value="JavaScript">
+                        <label for="js"> JavaScript</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="jquery" name="jquery" value="JQuery">
+                        <label for="jquery"> JQuery</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="Cplusplus" name="Cplusplus" value="C++">
+                        <label for="Cplusplus"> C++</label>
+                    </div>
+                </td>
+            <tr>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="ruby" name="ruby" value="Ruby">
+                        <label for="ruby"> Ruby</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="go" name="go" value="Go">
+                        <label for="go"> Go</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="Csharp" name="Csharp" value="C#">
+                        <label for="Csharp"> C#</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="PHP" name="PHP" value="PHP">
+                        <label for="PHP"> PHP</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="bash" name="bash" value="Bash/Shell/PowerShell">
+                        <label for="bash"> Bash/Shell/PowerShell</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="swift" name="swift" value="Swift">
+                        <label for="swift"> Swift</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="python" name="ruby" value="Python">
+                        <label for="python"> Python</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="typescript" name="typescript" value="TypeScript">
+                        <label for="typescript"> TypeScript</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="visualBasic" name="visualBasic" value="Visual Basic">
+                        <label for="visualBasic"> Visual Basic</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="objC" name="objC" value="Objective-C">
+                        <label for="objC"> Objective-C</label>
+                    </div>
+                </td>
+                <td>
+                    {% if "Design" in row["skills"] %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design" checked>
+                        <label for="design"> Design</label>
+                    </div>
+                    {% else %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="design" name="design" value="Design">
+                        <label for="design"> Design</label>
+                    </div>
+                    {% endif %}
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="perl" name="perl" value="Perl">
+                        <label for="perl"> Perl</label>
+                    </div>
+                </td>
+                <td>
+                    <div style="white-space: nowrap;">
+                        <input type="checkbox" id="AI" name="AI" value="ML/AI">
+                        <label for="AI"> ML/AI</label>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <div>
+        <label>Where do you live?</label>
+        <input name="location" class="reg" value="{{ row['location'] }}" type="text" maxlength="50">
+    </div>
+    <br>
+    <div>
+        <label>Phone number:</label>
+        <input name="phone" class="reg" value="{{ row['phone'] }}" type="text">
+    </div>
+    <br>
+    <div>
+        <label>Email:</label>
+        <input name="email" class="reg" value="{{ row['email'] }}" type="text">
+    </div>
+    <br>
+    <div>
+        <label>Additional contact info:</label>
+        <textarea rows="5" cols="60" class="reg" name="info" type="text">{{ row['info'] }}</textarea>
+    </div>
+    <br>
+    <button class="subButton but" type="submit">Update Profile</button>
+    <br>
+    <br>
+    </div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block title %}
+PostProjects
+{% endblock %}
+
+{% block style %}
+<style>
+    .page {
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    td {
+        padding: 20px;
+    }
+
+    form {
+        margin-left: 200px;
+        margin-right: 200px;
+    }
+
+    table {
+        background-color: #dfdfdf;
+        text-align: left;
+        display: block;
+        margin: 0 auto;
+        border-radius: 25px;
+        width: 97.5%;
+    }
+
+    .interest {
+        width: 24%;
+    }
+
+    h1.profile-info {
+        text-align: center;
+        margin: 30px;
+        font-size: 40px;
+        font-weight: 400;
+        margin-top: 65px;
+    }
+
+    h3.profile-info {
+        text-align: center;
+        margin: 28px;
+        font-weight: 300;
+        font-size: 25px;
+    }
+
+</style>
+{% endblock %}
+
+{% block body %}
+<h1 class="profile-info">Post a project!</h1>
+
+
+<form class="project-post" action="/project" method="post">
+    <div>
+        <label>Project Title:</label>
+        <input name="title" class="reg" placeholder="CS Collab Webapp" type="text" maxlength="50">
+    </div>
+    <div>
+        <label>Collaborators (usernames):</label>
+        <input name="users" class="reg" placeholder="JohnDoe, JaneDoe" type="text" maxlength="50">
+    </div>
+    <div>
+        <label>Description:</label>
+        <textarea class="reg" rows="5" cols="60" name="desc" style="text-align: left;"
+            placeholder="This webapp pairs cs students together!" type="text"></textarea>
+    </div>
+    <div>
+        <label>URL:</label>
+        <input name="url" class="reg" placeholder="www.team'nup.org" type="text" maxlength="50">
+    </div>
+    <br>
+    <button class="subButton but" type="submit">Post Project</button>
+    <br>
+</form>
+
+{% endblock %}
