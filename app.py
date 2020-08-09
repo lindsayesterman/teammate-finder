@@ -188,6 +188,7 @@ def updateProf():
         db.execute("UPDATE profile SET name=:name, bio=:bio,interests=:interests, skills=:skills,location=:location,phone=:phone,email=:email,info=:info WHERE id=:user_id;", user_id=session["user_id"], name=name, bio=bio, interests=interests, skills=skills, location=location, phone=phone, email=email, info=info)
         return redirect("/profile")
 
+
 @app.route("/updateProf2", methods=["GET","POST"])
 def updateProf2():
     """upodate your profile link"""
