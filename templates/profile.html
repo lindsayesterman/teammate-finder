@@ -6,32 +6,129 @@
 
 {% block style %}
     <style>
-        
+        .parent {
+            text-align: left;
+            margin-right: 200px;
+            line-height: 2;
+        }
+    
+        td {
+            padding: 20px;
+        }
+    
+        table {
+            background-color: rgb(231, 251, 255);
+            border-radius: 25px;
+        }
+    
+        hr {
+            border-top: 1px solid black;
+            margin-left: 150px;
+            margin-right: -50px;
+        }
     </style>
 {% endblock %}
 
 {% block body %}
-<div class="my-profile">
-    <h2 b>Your Name: </h2>
-    {{ row["yourname"] }}
-    <div class="profile-card">
-        <h3>Username: </h2>
-        {{ row["username"] }}
-        <h3>Bio: </h2>
-        {{ row["Bio"] }}
-        <h3>Interests: </h2>
-        {{ row["interests"] }}
-        <h3>Skills: </h2>
-        {{ row["skills"] }}
-        <h3>Phone: </h2>
-        {{ row["phone"] }}
-        <h3>Email: </h2>
-        {{ row["email"] }}
-        <h3>Location: </h2>
-        {{ row["location"] }}
-        <h3>Other CS Info: </h3>
-        {{ row["info"]}}
+<div class="parent">
+    <br>
+    <div style="margin-left:100px;">
+        <form action="/browse" style="display: inline;font-size:larger;">
+            <button style="border-radius: 10px;background-color:rgb(231, 251, 255);" type="submit">
+                &#8592 Return to Browsing</button>
+        </form>
     </div>
+    <br>
+    <br>
+    <div style="margin-left:100px;">
+        <h1>{{ row["username"] }}</h1>
+    </div>
+    <div style="margin-left:100px;">
+        <h3><i>{{row["name"]}}</i></h3>
+    </div>
+    <br>
+    <br>
+    <div style="margin-left:100px;">
+        <h4>Bio:</h4>
+        <p>{{row["bio"]}}</p>
+    </div>
+    <br>
+    <br>
+    <div style="margin-left:100px;">
+        <h4>Interests:</h4>
+        <table>
+            <tr>
+                {% for interest in row["interests"].split("#") %}
+                    <td>
+                        <p>{{ interest }}</p>
+                    </td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+    <br>
+    <br>
+    <div style="margin-left:100px;">
+        <h4>Skills:</h4>
+        <table>
+            <tr>
+                {% for skill in row["skills"].split("#") %}
+                <td>
+                    <p>{{skill}}</p>
+                </td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+    <br>
+    <br>
+    <hr>
+    <br>
+    <br>
+    <table style="text-align:center;margin-left:175px;margin-right: auto;table-layout: fixed;width: 1100px;">
+        <tr>
+            <td style="max-width: 100px;">
+                <div>
+                    <h4>Location:</h4>
+                    <p>{{row["location"]}}</p>
+                </div>
+            </td>
+            <td style="padding-left:50px;">
+                <div>
+                    <h4>Phone:</h4>
+                    <p>{{row["phone"]}}</p>
+                </div>
+            </td>
+            <td style="padding-left:150px;">
+                <div>
+                    <h4>Email:</h4>
+                    <p>{{ row["email"] }}</p> 
+                </div>  
+            </td>
+        </tr>
+        {% if row["info"] != None %}
+        <tr>
+            <td>
+                <div>
+                    <h4>Other Contacts:</h4>
+                    <p>{{row["info"]}}</p>
+                </div>
+            </td>
+        </tr>
+        {% endif %}
+    </table>
+    <br>
+    <br>
+    <hr>
+    <br>
+    <br>
+    <div style="margin-left:200px;">
+        <form action="TODO">
+            <input class="but" type="submit" value="MTODO?" />
+        </form>
+    </div>
+    <br>
+    <br>
 </div>
 {% endblock %}
 

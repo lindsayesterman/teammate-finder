@@ -110,7 +110,7 @@ def profilePost():
     """create profile"""
     if request.method == "POST":
         #get all info from form
-        username = db.execute("SELECT username FROM user WHERE id=:user_id",user_id=session["user_id"])
+        username = db.execute("SELECT username FROM user WHERE id=:user_id",user_id=session["user_id"])[0]["username"]
         name = request.form.get("name")
         bio = request.form.get("bio")
         interests1 = request.form.get("interest1")
@@ -175,11 +175,6 @@ def friends():
 def friendSomeone():
     """Show friends"""
     #do code ...
-
-@app.route("/stuff")
-def stuff():
-    """Show friends"""
-    return render_template("profilePost.html")
 
 @app.route("/browse", methods=["POST","GET"])
 def browse():

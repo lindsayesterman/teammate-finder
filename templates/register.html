@@ -7,17 +7,14 @@ Register
 {% block body %}
     <form action="/register" class="register-form" method="post">
         <div>
-            <input class="reg" id="username" name="username" placeholder="Username" type="text">
-            <p id="errorUsername"></p>
+            <input class="reg" name="username" placeholder="Username" type="text">
         </div>
         <div>
-            <input class="reg" id="username" name="password" placeholder="Password" type="password">
-            <p id="errorPassword"></p>
+            <input class="reg" name="password" placeholder="Password" type="password">
         </div>
         <div>
-            <input class="reg" id="username" name="confirmation" placeholder="Confirm Password" type="password">
-            <p id="errorConfirmPassword"></p>
+            <input class="reg" name="confirmation" placeholder="Confirm Password" type="password">
         </div>
-        <button class="but" type="submit" onclick="register()">Register</button>
+        <button class="but" type="submit">Register</button>
     </form>
 {% endblock %}
