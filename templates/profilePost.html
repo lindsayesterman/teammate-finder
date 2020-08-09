@@ -26,6 +26,7 @@ Profile
         display:block;
         margin:0 auto;
         border-radius: 25px;
+        width:90%;
     }
     
     .interest{
@@ -56,11 +57,22 @@ Profile
 <h3 class="profile-info">Enter some profile info so we can get you matched!</h3>
 
 
-<form action="/profilePost" method="post">
+<form action="/register" method="post">
+    <label>Account:</label>
     <div class="page">
-        <label>Your Name:</label>
-        <input class="reg" name="name" placeholder="John Doe" type="text">
+        <input class="reg" name="username" placeholder="Username" type="text">
     </div>
+    <div>
+        <input class="reg" name="password" placeholder="Password" type="password">
+    </div>
+    <div>
+        <input class="reg" name="confirmation" placeholder="Confirm Password" type="password">
+    </div>
+    <br>
+    <div>
+        <label>Your Name:</label>
+        <input class="reg" rows="5" cols="60" name="name" style="text-align: left;" type="name">
+       </div>
     <br>
     <div>
         <label>Summary/bio:</label>

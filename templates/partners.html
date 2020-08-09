@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Browse
+    Partners
 {% endblock %}
 
 {% block style %}
+
 <style>
-    
     .row{
         padding:60px;
     }
@@ -59,42 +59,42 @@ Browse
         left:19%;
     }
     .search-btn{
-        display:block;
-        margin: 0 auto;
-        width:40%;
-        height:40px;
-        margin-top:20px;
+        width: 20%;
+        padding: 10px;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none; /* Prevent double borders */
+        cursor: pointer;
     }
-    
-    
-</style>
 
+</style>
 {% endblock %}
 
-{% block body %}
-<input type="text" name="search" class="search-btn" placeholder="Search..">
 
+{% block body %}
+<input type="search">
 <div class="row">
-    {% for row in rows %}
+    {% for friend in friends %}
     <div class="browse-profiles">
         <div class=" mb-4 back">
             <div class="card-body">
-                <h5 class="card-title">{{ row["name"] }}</h5>
-                <p class="card-text des">Bio: {{ row["bio"] }}</p>
-                <p class="card-text des">Interests: {% for interest in row["interests"].split("#") %}
+                <h5 class="card-title">{{ friend["name"] }}</h5>
+                <p class="card-text des">Bio: {{ friend["bio"] }}</p>
+                <p class="card-text des">Interests: {% for interest in friend["interests"].split("#") %}
                     {{ interest }}
                     {% endfor %}</p>
-                    <p class="card-text des">Skills: {% for skill in row["skills"].split("#") %}
+                    <p class="card-text des">Skills: {% for skill in friend["skills"].split("#") %}
                         {{ skill }}
                         {% endfor %}
                     </p>
                     <form action="/profile" method="post">
-                        <input type="hidden" name="person_id" value="{{row['id']}}">
+                        <input type="hidden" name="person_id" value="{{friend['id']}}">
                         <input class="first btn btn-primary" type="submit" name="button" value="Visit Profile">
                     </form>
                     <form action="/partners" method="post">
-                        <input type="hidden" name="person_id" value="{{row['id']}}">
-                        <input class="second btn btn-primary" type="submit" name="button" value="Partner Up">
+                        <input type="hidden" name="person_id" value="{{friend['id']}}">
+                        <input class="second btn btn-primary" type="submit" name="button" value="Remove">
                     </form>
                 </div>
             </div>

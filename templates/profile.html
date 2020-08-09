@@ -6,19 +6,29 @@
 
 {% block style %}
     <style>
+
+        .profile-page{
+            display:block;
+            margin:0 auto;
+            width:80%
+        }
+        
+        h1.profile-name{
+            font-size:30px;
+        }
+
+        h3.profile-name{
+            font-size:20px;
+        }
+
+        .sub{
+            font-size: 20px;
+        }
+        
         .parent {
             text-align: left;
             margin-right: 200px;
             line-height: 2;
-        }
-    
-        td {
-            padding: 20px;
-        }
-    
-        table {
-            background-color: rgb(231, 251, 255);
-            border-radius: 25px;
         }
     
         hr {
@@ -26,109 +36,106 @@
             margin-left: 150px;
             margin-right: -50px;
         }
+        
+        #editProfile{
+            height: 50px;
+            width: 110px;
+            margin-top: 15px;
+            border: 2px solid blue;
+            background-color: white;
+            border-radius: 10px;
+            color: black;
+            text-align: center;
+        }
+        #editProfile:hover{
+            background-color: rgb(83, 83, 255);
+        }
+        #logOut{
+            height: 50px;
+            width: 110px;
+            margin-top: 15px;
+            border: 2px solid rgb(15, 209, 15);
+            background-color: white;
+            border-radius: 10px;
+            color: black;
+            text-align: center;
+        }
+        #logOut:hover{
+            background-color: rgb(145, 231, 95);
+        }
+        #profilePart {
+            display: flex;
+        }
+        
+        button.back{
+            border-radius: 8px;
+            background-color:whitesmoke;
+            font-size:15px;
+
+        }
+
     </style>
 {% endblock %}
 
 {% block body %}
+<div class="profile-page">
 <div class="parent">
     <br>
     <div style="margin-left:100px;">
         <form action="/browse" style="display: inline;font-size:larger;">
-            <button style="border-radius: 10px;background-color:rgb(231, 251, 255);" type="submit">
+            <button class="back" type="submit">
                 &#8592 Return to Browsing</button>
         </form>
-    </div>
     <br>
     <br>
-    <div style="margin-left:100px;">
-        <h1>{{ row["username"] }}</h1>
-    </div>
-    <div style="margin-left:100px;">
-        <h3><i>{{row["name"]}}</i></h3>
-    </div>
-    <br>
-    <br>
-    <div style="margin-left:100px;">
-        <h4>Bio:</h4>
-        <p>{{row["bio"]}}</p>
-    </div>
-    <br>
-    <br>
-    <div style="margin-left:100px;">
-        <h4>Interests:</h4>
-        <table>
-            <tr>
-                {% for interest in row["interests"].split("#") %}
-                    <td>
-                        <p>{{ interest }}</p>
-                    </td>
-                {% endfor %}
-            </tr>
-        </table>
-    </div>
-    <br>
-    <br>
-    <div style="margin-left:100px;">
-        <h4>Skills:</h4>
-        <table>
-            <tr>
-                {% for skill in row["skills"].split("#") %}
-                <td>
-                    <p>{{skill}}</p>
-                </td>
-                {% endfor %}
-            </tr>
-        </table>
-    </div>
-    <br>
-    <br>
-    <hr>
-    <br>
-    <br>
-    <table style="text-align:center;margin-left:175px;margin-right: auto;table-layout: fixed;width: 1100px;">
-        <tr>
-            <td style="max-width: 100px;">
+    <div id="profilePart">
+        <div id="nameEtc" style="margin-left:0px;"> 
+            <h1 class="profile-name">{{row["name"]}}</h1>
+            <h3 class="profile-name"><i>@{{ row["username"] }}</i></h3>
+            <form action="TODO">
+                <input id="editProfile" type="submit" value="Edit Profile"/>
+            </form>
+            <form action="#">
+                <input id="logOut" type="submit" value="Log Out"/>
+            </form>
+        </div>
+        <div id="about">
+            <div style="margin-left:100px;">
+                <h4 class="sub">Bio:</h4>
+                    <p>{{row["bio"]}}</p>
+            </div>
+    
+            <div style="margin-left:100px;">
+                <h4 class="sub">Interests:</h4>
+                        <p>{{row["interests"]}}</p>
+            </div>
+          
+            <div style="margin-left:100px;">
+                <h4 class="sub">Skills:</h4>
+                <br>
+                {% for skill in skills %}
+            </div>
+            <div style="text-align: center;">
+                <h4 class="sub">Location:</h4>
+                <p>{{row["location"]}}</p>
+            </div>
+            <div>
+                <h4 class="sub">Phone #:</h4>
+                <p>{{row["phone"]}}</p>
+            </div>
+            <div>
+                <h4 class="sub">Email:</h4>
+                <p>{{ row["email"] }}</p> 
+            </div>  
+            {% if row["info"] != None %}
                 <div>
-                    <h4>Location:</h4>
-                    <p>{{row["location"]}}</p>
-                </div>
-            </td>
-            <td style="padding-left:50px;">
-                <div>
-                    <h4>Phone:</h4>
-                    <p>{{row["phone"]}}</p>
-                </div>
-            </td>
-            <td style="padding-left:150px;">
-                <div>
-                    <h4>Email:</h4>
-                    <p>{{ row["email"] }}</p> 
-                </div>  
-            </td>
-        </tr>
-        {% if row["info"] != None %}
-        <tr>
-            <td>
-                <div>
-                    <h4>Other Contacts:</h4>
+                    <h4 class="sub">Other Contacts:</h4>
                     <p>{{row["info"]}}</p>
                 </div>
-            </td>
-        </tr>
-        {% endif %}
-    </table>
-    <br>
-    <br>
-    <hr>
-    <br>
-    <br>
-    <div style="margin-left:200px;">
-        <form action="TODO">
-            <input class="but" type="submit" value="MTODO?" />
-        </form>
+            {% endif %}
+        </div>
     </div>
-    <br>
-    <br>
+</div>
 </div>
 {% endblock %}
 

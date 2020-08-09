@@ -88,29 +88,7 @@ def register():
         #set the user id in session
         user_id = db.execute("SELECT id FROM user WHERE username = :username", username=username)[0]["id"]
         session["user_id"] = user_id
-        return redirect("/profilePost")
-    else:
-        return render_template("register.html")
-        
-@app.route("/logout")
-def logout():
-    """Logout"""
-    #forget user
-    session.clear()
-    return redirect("/")
-
-@app.route("/")
-def index():
-    """index"""
-    return render_template("index.html")
-
-
-@app.route("/profilePost", methods=["GET","POST"])
-def profilePost():
-    """create profile"""
-    if request.method == "POST":
-        #get all info from form
-        username = db.execute("SELECT username FROM user WHERE id=:user_id",user_id=session["user_id"])[0]["username"]
+        #CREATE profile stuff
         name = request.form.get("name")
         bio = request.form.get("bio")
         interests1 = request.form.get("interest1")
@@ -119,7 +97,7 @@ def profilePost():
         interests4 = request.form.get("interest4")
         if not interests1 or not interests2 or not interests3 or not interests4:
             return error("must provide 4 interests","/profilePost")
-        interests = str(interests1)+"#"+str(interests2)+"#"+str(interests3)+"#"+str(interests4)
+        interests = str(interests1)+", "+str(interests2)+", "+str(interests3)+", "+str(interests4)
         skills_all = ["design","html","C","react","java","node","linux","sql","mongodb","js","jquery","Cplusplus","ruby","go","Csharp","PHP","bash","swift"]
         skills=""
         for skill in skills_all:
@@ -127,7 +105,7 @@ def profilePost():
                 if skills == "":
                     skills += request.form.get(skill)
                 else:
-                    skills += "#" + request.form.get(skill)
+                    skills += ", " + request.form.get(skill)
         location = request.form.get("location")
         phone = request.form.get("phone")
         email = request.form.get("email")
@@ -142,6 +120,18 @@ def profilePost():
         return redirect("/profile")
     else:
         return render_template("profilePost.html")
+        
+@app.route("/logout")
+def logout():
+    """Logout"""
+    #forget user
+    session.clear()
+    return redirect("/")
+
+@app.route("/")
+def index():
+    """index"""
+    return render_template("index.html")
 
 @app.route("/profile", methods=["GET","POST"])
 def profile():
@@ -150,31 +140,44 @@ def profile():
         #MUST HAVE VALUE OF PERSON WHO WAS CLICKED ON ID (CREATE A HIDDEN INPUT?)
         #if clicked on friend profile
         person_id = request.form.get("person_id")
-        row = db.execute("SELECT * FROM profile WHERE id = :user_id", user_id=person_id)
+        row = db.execute("SELECT * FROM profile WHERE id = :user_id", user_id=person_id)[0]
         return render_template("profile.html",row=row)
     else:
         #if going to your own profile
-        row = db.execute("SELECT * FROM profile WHERE id = :user_id", user_id=session["user_id"])
+        row = db.execute("SELECT * FROM profile WHERE id = :user_id", user_id=session["user_id"])[0]
         return render_template("profile.html",row=row)
 
-@app.route("/friends")
-def friends():
+@app.route("/partners", methods=["POST","GET"])
+def partners():
     """Show friends"""
-    friends = []
-    #check if your username is in the user1 slot
-    rows = db.execute("SELECT username2 FROM friends WHERE username2 = :user", user=session["user_id"])
-    for row in rows:
-        friends.append(row)
-    #check if your username is in the user2 slot
-    rows2 = db.execute("SELECT username2 FROM friends WHERE username2 = :user", user=session["user_id"])
-    for row in rows2:
-        friends.append(row)
-    return render_template("friends.html", friends=friends)
+    if request.method == "POST":
+        person_id = request.form.get("person_id")
+        #check if partening already exists
+        prev = db.execute("SELECT * FROM friends WHERE username2 = :user AND username1=:user1", user=session["user_id"],user1=person_id)
+        prev2 = db.execute("SELECT * FROM friends WHERE username1 = :user  AND username2=:user2", user=session["user_id"],user2=person_id)
+        if len(prev) == 0 and len(prev2) == 0:
+            db.execute("INSERT INTO friends (username1, username2) VALUES (:user1, :user2)", user1=session["user_id"],user2=person_id)
+        return redirect("/partners")
+    else:
+        friendsName = []
+        #check if your username is in the user1 slot
+        friend_name = db.execute("SELECT username1 FROM friends WHERE username2 = :user", user=session["user_id"])
+        if len(friend_name) != 0:
+            friend_name=friend_name[0]
+        for friend in friend_name:
+            friendsName.append(friend)
+        #check if your username is in the user2 slot
+        friend_name2 = db.execute("SELECT username2 FROM friends WHERE username1 = :user", user=session["user_id"])
+        if len(friend_name2) != 0:
+            friend_name2=friend_name2[0]
+        for friend in friend_name2:
+            friendsName.append(friend)
 
-@app.route("/friendSomeone")
-def friendSomeone():
-    """Show friends"""
-    #do code ...
+        friends=[]
+        for friend in friendsName:
+            row = db.execute("SELECT * FROM profile WHERE id=:person_id",person_id=friend)[0]
+            friends.append(row)
+        return render_template("partners.html", friends=friends)
 
 @app.route("/browse", methods=["POST","GET"])
 def browse():
