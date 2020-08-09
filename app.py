@@ -368,7 +368,7 @@ def view():
             #get rows that correspond with search from internship database
             for val in searchArr:
                 rows = []
-                rowsTemp = db.execute("SELECT * FROM projects WHERE (title LIKE ('%' || :search || '%') OR desc LIKE ('%' || :search || '%') OR users LIKE ('%' || :search || '%')", search=val)
+                rowsTemp = db.execute("SELECT * FROM projects WHERE title LIKE ('%' || :search || '%') OR desc LIKE ('%' || :search || '%') OR users LIKE ('%' || :search || '%')", search=val)
                 for row in rowsTemp:
                     if row not in rows:
                         rows.append(row)
